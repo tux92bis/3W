@@ -23,6 +23,7 @@ typedef struct {
     int pressionAtmo;
     int temperatureAir;
     int hygrometrie;
+    int lumiere;
 } Capteurs;
 
 void modeConfiguration();
