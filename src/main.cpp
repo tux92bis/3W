@@ -18,7 +18,6 @@ void setup() {
   pinMode(BOUTON_VERT, INPUT);
 }
 
-void loop() 
-{
+void loop() {
   /*A completer : fonction qui appel la fonction de mode approprier en fonction de l'état initial et des fonctions d'interruptions.*/ 
 }
