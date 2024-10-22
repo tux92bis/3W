@@ -1,6 +1,4 @@
-#include <Arduino.h>
-#include "3W.h"
-
+#include "3W.h"   // Inclus notre fichier en-tête
 
 // put function declarations here:
 
