@@ -12,14 +12,6 @@
 #define ECONOMIQUE 2
 #define MAINTENANCE 3
 
-
-typedef struct {
-    int pressionAtmo;
-    int temperatureAir;
-    int hygrometrie;
-    int lumiere;
-} Capteurs;
-
 void modeConfiguration();
 void modeStandard();
 void modeEconomique();
