@@ -1,7 +1,6 @@
 #include "3W.h"   // Inclus notre fichier en-tête
 
-// put function declarations here:
-
+/*-----code des fonctions-----*/
 int get_data() {
   int ldrValue = analogRead(ldrPin); // Lecture de la photorésistance 
   float temperature = dht.readTemperature(); // Lecture de la température
@@ -29,10 +28,21 @@ void save_data_csv(float temperature, float humidity, int luminosity, String tim
     }
 }
 
+// structure des données pour le capteur
+typedef struct {
+    int pressionAtmo;
+    int temperatureAir;
+    int hygrometrie;
+    int lumiere;
+} Capteurs;
+
 
 void setup() {
-  // put your setup code here, to run once:
-  
+  Serial.begin(9600);   // Initalisation du moniteur série
+
+  // Initialisation du port du bouton pour capter des entrées
+  pinMode(BOUTON_ROUGE, INPUT);
+  pinMode(BOUTON_VERT, INPUT);
 }
 
 void loop() {
