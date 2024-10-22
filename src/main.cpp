@@ -8,10 +8,9 @@ int get_data() {
   float humidity = dht.readHumidity(); //Lecture de l'humidité
 }
 String get_time() {
-    DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
-    String time = String(now.year()) + "-" + String(now.month()) + "-" + String(now.day()) + " " +
-                  String(now.hour()) + ":" + String(now.minute()) + ":" + String(now.second());
-    return time;
+  DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
+  String time = String(now.year()) + "-" + String(now.month()) + "-" + String(now.day()) + " " + String(now.hour()) + ":" + String(now.minute()) + ":" + String(now.second());
+  return time;
 }
 
 void save_data_csv(float temperature, float humidity, int luminosity, String time) {
