@@ -1,30 +1,16 @@
-#pragma once
+#pragma once   // Pour éviter d'appeler plusieurs fichier en-tête
 
-#define CONFIGURATION 0
+/*-----Définition des macros-----*/
+#define BOUTON_ROUGE 2   // Port du bouton rouge
+#define BOUTON_VERT 3   // Port du bouton vert
+#define CAPTEUR 4   // Port du capteur
+#define PHOTORESISTANCE A0   // Port de la photorésistance
+
+// Utiliser pour basculer entra chaque mode
+#define CONFIGURATION 0   
 #define STANDARD 1
 #define ECONOMIQUE 2
 #define MAINTENANCE 3
-
-const int buttonPin1 = 2;
-const int buttonPin2 = 3;
-const int ledPinR = 9;
-const int ledPinG = 10;
-const int ledPinB = 11;
-
-int buttonState1 = 0;
-int buttonState2 = 0;
-unsigned long lastButtonPress1 = 0;
-unsigned long lastButtonPress2 = 0;
-int currentMode = STANDARD;
-int sdCardInserted = 0;
-int dataAvailable = 0;
-
-typedef struct {
-    int pressionAtmo;
-    int temperatureAir;
-    int hygrometrie;
-    int lumiere;
-} Capteurs;
 
 void modeConfiguration();
 void modeStandard();
