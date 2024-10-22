@@ -3,6 +3,10 @@
 
 // put function declarations here:
 int myFunction(int, int);
+int get_data() { 
+}
+save_data_csv{}
+
 
 void setup() {
   // put your setup code here, to run once:
