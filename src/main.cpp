@@ -1,39 +1,36 @@
 #include "3W.h"   // Inclus notre fichier en-tête
-#include <Arduino.h>
 
-/*-----code des fonctions-----*/
 
-// structure des données pour le capteur
-typedef struct 
-{#include <Arduino.h>
-#include "3W.h"
-
-// Définition des macros
+/*-----Définition des macros-----*/
 #define BOUTON_ROUGE 2   // Port du bouton rouge
 #define BOUTON_VERT 3   // Port du bouton vert
 #define PHOTORESISTANCE A0   // Port de la photorésistance
 #define LED_PIN 7   // Port de la LED
 
-// Utiliser pour basculer entre chaque mode
+
+/*-----Utiliser pour basculer entre chaque mode-----*/
 #define CONFIGURATION 0   
 #define STANDARD 1
 #define ECONOMIQUE 2
 #define MAINTENANCE 3
 
-// Structure pour les capteurs
+
+/*-----structure des données pour le capteur-----*/
 typedef struct {
     float temperatureAir;
     float hygrometrie;
     int lumiere;
 } Capteurs;
 
-// Déclaration des variables globales
+
+/*-----Déclaration des variables globales-----*/
 Capteurs capteurs;
 int modeCourant = STANDARD;
 volatile bool boutonAppuye = false;
 unsigned long debutAppuiBouton = 0;
 
-// Prototypes des fonctions
+
+/*-----Prototypes des fonctions-----*/
 void modeConfig();
 void modeStandard();
 void modeEco();
@@ -44,7 +41,8 @@ void sauvegarderCSV(Capteurs capteurs, String time);
 void onButtonPress();
 void clignoterLED();
 
-// Fonction pour obtenir les lectures des capteurs 
+
+/*-----Fonction pour obtenir les lectures des capteurs-----*/ 
 Capteurs get_data() {
     Capteurs data;
     data.lumiere = analogRead(PHOTORESISTANCE); // Lecture de la photorésistance
@@ -53,7 +51,8 @@ Capteurs get_data() {
     return data;
 }
 
-// Fonction pour obtenir l'heure actuelle 
+
+/*-----Fonction pour obtenir l'heure actuelle-----*/ 
 String get_time() {
     DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
     String time = String(now.year()) + "-" + String(now.month()) + "-" + String(now.day()) + " " +
@@ -61,7 +60,8 @@ String get_time() {
     return time;
 }
 
-// Fonction pour sauvegarder les données dans un fichier CSV 
+
+/*-----Fonction pour sauvegarder les données dans un fichier CSV-----*/ 
 void save_data_csv(Capteurs capteurs, String time) {
     File dataFile = SD.open("data.csv", FILE_WRITE);
     if (dataFile) {
@@ -78,7 +78,8 @@ void save_data_csv(Capteurs capteurs, String time) {
     }
 }
 
-// Fonctions pour les différents modes
+
+/*-----Fonctions pour les différents modes-----*/
 void modeConfig() {
     Serial.println("Mode Configuration activé");
     // Logique pour le mode configuration
@@ -134,10 +135,16 @@ void clignoterLED() {
 
 void setup() {
     Serial.begin(9600);
+
+    // Initialisation du port des boutons pour capter des entrées
     pinMode(BOUTON_ROUGE, INPUT_PULLUP);
     pinMode(BOUTON_VERT, INPUT);
-    pinMode(LED_PIN, OUTPUT);
+
+    pinMode(LED_PIN, OUTPUT);// initialisation de la led
+
+    // Initialisation des interruptions
     attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), onButtonPress, FALLING);
+
     // Initialisation des capteurs et modules (e.g., RTC, SD card)
     modeStandard();
 }
@@ -183,28 +190,4 @@ void loop() {
     clignoterLED();
 
     delay(1000); // Attente d'une seconde avant la prochaine lecture
-}
-
-    int temperatureAir;
-    int hygrometrie;
-    int lumiere;
-} Capteurs;
-
-
-void setup() {
-  Serial.begin(9600);   // Initalisation du moniteur série
-
-  // Initialisation du port du bouton pour capter des entrées
-  pinMode(BOUTON_ROUGE, INPUT);
-  pinMode(BOUTON_VERT, INPUT);
-}
-
-void loop() 
-{
-  /*A completer : fonction qui appel la fonction de mode approprier en fonction de l'état initial et des fonctions d'interruptions.*/ 
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
 }
