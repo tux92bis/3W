@@ -1,12 +1,11 @@
-#include "3W.h"   // Inclus notre fichier en-tête
 #include <Arduino.h>
-
-/*-----code des fonctions-----*/
-
-// structure des données pour le capteur
-typedef struct 
-{#include <Arduino.h>
 #include "3W.h"
+#include "DHT22.h"
+#include "Ecran_LCD.h"
+#include "GPS.h"
+#include "Horloge.h"
+#include "LED_RVB.h"
+#include "SD.h"
 
 // Définition des macros
 #define BOUTON_ROUGE 2   // Port du bouton rouge
@@ -80,22 +79,26 @@ void save_data_csv(Capteurs capteurs, String time) {
 
 // Fonctions pour les différents modes
 void modeConfig() {
-    Serial.println("Mode Configuration activé");
+    lcd.clear();
+lcd.print("Mode Config actif");
     // Logique pour le mode configuration
 }
 
 void modeStandard() {
-    Serial.println("Mode Standard activé");
+    lcd.clear();
+lcd.print("Mode Standard actif");
     // Logique pour le mode standard
 }
 
 void modeEco() {
-    Serial.println("Mode Économique activé");
+    lcd.clear();
+lcd.print("Mode Eco actif");
     // Logique pour le mode économique
 }
 
 void modeMaint() {
-    Serial.println("Mode Maintenance activé");
+    lcd.clear();
+lcd.print("Mode Maint actif");
     // Logique pour le mode maintenance
 }
 
@@ -138,7 +141,18 @@ void setup() {
     pinMode(BOUTON_VERT, INPUT);
     pinMode(LED_PIN, OUTPUT);
     attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), onButtonPress, FALLING);
-    // Initialisation des capteurs et modules (e.g., RTC, SD card)
+
+    // Initialisation des capteurs et modules (DHT, Écran LCD, GPS, Horloge, LED RVB, SD card)
+    dht.begin(); // Initialisation du capteur DHT22
+    lcd.begin(16, 2); // Initialisation de l'écran LCD 16x2
+    gps.begin(9600); // Initialisation du GPS
+    rtc.begin(); // Initialisation de l'horloge RTC
+    ledRVB.init(); // Initialisation de la LED RVB
+    if (!SD.begin(4)) { // Initialisation de la carte SD (CS sur pin 4)
+        lcd.clear();
+lcd.print("Erreur init SD");
+    }
+
     modeStandard();
 }
 
@@ -183,28 +197,4 @@ void loop() {
     clignoterLED();
 
     delay(1000); // Attente d'une seconde avant la prochaine lecture
-}
-
-    int temperatureAir;
-    int hygrometrie;
-    int lumiere;
-} Capteurs;
-
-
-void setup() {
-  Serial.begin(9600);   // Initalisation du moniteur série
-
-  // Initialisation du port du bouton pour capter des entrées
-  pinMode(BOUTON_ROUGE, INPUT);
-  pinMode(BOUTON_VERT, INPUT);
-}
-
-void loop() 
-{
-  /*A completer : fonction qui appel la fonction de mode approprier en fonction de l'état initial et des fonctions d'interruptions.*/ 
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
 }
