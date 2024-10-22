@@ -1,19 +1,24 @@
-#include <Arduino.h>
-#include "3W.h"
+#include "3W.h"   // Inclus notre fichier en-tête
 
-// put function declarations here:
-int myFunction(int, int);
+/*-----code des fonctions-----*/
+
+// structure des données pour le capteur
+typedef struct {
+    int temperatureAir;
+    int hygrometrie;
+    int lumiere;
+} Capteurs;
+
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);   // Initalisation du moniteur série
+
+  // Initialisation du port du bouton pour capter des entrées
+  pinMode(BOUTON_ROUGE, INPUT);
+  pinMode(BOUTON_VERT, INPUT);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void loop() 
+{
+  /*A completer : fonction qui appel la fonction de mode approprier en fonction de l'état initial et des fonctions d'interruptions.*/ 
 }
