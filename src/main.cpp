@@ -55,8 +55,10 @@ Capteurs get_data() {
 /*-----Fonction pour obtenir l'heure actuelle-----*/ 
 String get_time() {
     DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
+
     String time = String(now.year()) + "-" + String(now.month()) + "-" + String(now.day()) + " " +
                   String(now.hour()) + ":" + String(now.minute()) + ":" + String(now.second());
+
     return time;
 }
 
@@ -64,6 +66,7 @@ String get_time() {
 /*-----Fonction pour sauvegarder les données dans un fichier CSV-----*/ 
 void save_data_csv(Capteurs capteurs, String time) {
     File dataFile = SD.open("data.csv", FILE_WRITE);
+
     if (dataFile) {
         dataFile.print(time);            // Sauvegarder le temps
         dataFile.print(",");
@@ -73,7 +76,9 @@ void save_data_csv(Capteurs capteurs, String time) {
         dataFile.print(",");
         dataFile.println(capteurs.lumiere);    // Sauvegarder la luminosité
         dataFile.close();
-    } else {
+    } 
+    
+    else {
         Serial.println("Erreur d'ouverture du fichier");
     }
 }
@@ -81,22 +86,26 @@ void save_data_csv(Capteurs capteurs, String time) {
 
 /*-----Fonctions pour les différents modes-----*/
 void modeConfig() {
-    Serial.println("Mode Configuration activé");
+    lcd.clear();
+    lcd.print("Mode Config actif");
     // Logique pour le mode configuration
 }
 
 void modeStandard() {
-    Serial.println("Mode Standard activé");
+    lcd.clear();
+    lcd.print("Mode Standard actif");
     // Logique pour le mode standard
 }
 
 void modeEco() {
-    Serial.println("Mode Économique activé");
+    lcd.clear();
+    lcd.print("Mode Eco actif");
     // Logique pour le mode économique
 }
 
 void modeMaint() {
-    Serial.println("Mode Maintenance activé");
+    lcd.clear();
+    lcd.print("Mode Maint actif");
     // Logique pour le mode maintenance
 }
 
@@ -115,12 +124,15 @@ void clignoterLED() {
         case CONFIGURATION:
             intervalle = 100;  // Clignotement rapide
             break;
+
         case STANDARD:
             intervalle = 500;  // Clignotement moyen
             break;
+
         case ECONOMIQUE:
             intervalle = 1000; // Clignotement lent
             break;
+
         case MAINTENANCE:
             intervalle = 200;  // Clignotement intermédiaire
             break;
@@ -140,12 +152,25 @@ void setup() {
     pinMode(BOUTON_ROUGE, INPUT_PULLUP);
     pinMode(BOUTON_VERT, INPUT);
 
-    pinMode(LED_PIN, OUTPUT);// initialisation de la led
+    // initialisation de la led
+    pinMode(LED_PIN, OUTPUT);
 
     // Initialisation des interruptions
     attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), onButtonPress, FALLING);
 
-    // Initialisation des capteurs et modules (e.g., RTC, SD card)
+    /*-----Initialisation des capteurs et modules (DHT, Écran LCD, GPS, Horloge, LED RVB, SD card)-----*/
+    dht.begin(); // Initialisation du capteur DHT22
+    lcd.begin(16, 2); // Initialisation de l'écran LCD 16x2
+    gps.begin(9600); // Initialisation du GPS
+    rtc.begin(); // Initialisation de l'horloge RTC
+    ledRVB.init(); // Initialisation de la LED RVB
+    
+    if (!SD.begin(4)) { 
+        // Initialisation de la carte SD (CS sur pin 4)
+        lcd.clear();
+        lcd.print("Erreur init SD");
+    }
+
     modeStandard();
 }
 
@@ -160,18 +185,22 @@ void loop() {
 
         dureeAppui = millis() - dureeAppui;
 
-        if (dureeAppui > 2000) { // Si le bouton est appuyé pendant plus de 2 secondes
+        // Si le bouton est appuyé pendant plus de 2 secondes
+        if (dureeAppui > 2000) { 
             modeCourant = (modeCourant + 1) % 4; // Passer au mode suivant
             switch (modeCourant) {
                 case CONFIGURATION:
                     modeConfig();
                     break;
+
                 case STANDARD:
                     modeStandard();
                     break;
+
                 case ECONOMIQUE:
                     modeEco();
                     break;
+
                 case MAINTENANCE:
                     modeMaint();
                     break;

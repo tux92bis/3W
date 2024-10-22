@@ -1,26 +1,27 @@
-#include <Wire.h>
+//Fichier de tests pour vérifier le bon fonctionnement du moniteur LCD
+
+#include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-// Adresse de l'écran LCD I2C (souvent 0x27 ou 0x3F selon le modèle)
-#define LCD_ADDRESS 0x27
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
-// Définir la taille de l'écran LCD (colonnes, lignes)
-LiquidCrystal_I2C lcd(LCD_ADDRESS, 16, 2);
-
-void setup() {
-  // Initialiser l'écran LCD
-  lcd.begin();
-  // Activer le rétroéclairage
+void setup()
+{
+  lcd.init();                      // initialize the lcd 
+  lcd.init();
+  // Print a message to the LCD.
   lcd.backlight();
-
-  // Afficher un message
-  lcd.setCursor(0, 0); // Positionner le curseur à la première ligne, première colonne
-  lcd.print("Hello, Arduino!");
-
-  lcd.setCursor(0, 1); // Deuxième ligne
-  lcd.print("I2C LCD Test");
+  lcd.setCursor(3,0);
+  lcd.print("Hello, world!");
+  lcd.setCursor(2,1);
+  lcd.print("Ywrobot Arduino!");
+   lcd.setCursor(0,2);
+  lcd.print("Arduino LCM IIC 2004");
+   lcd.setCursor(2,3);
+  lcd.print("Power By Ec-yuan!");
 }
 
-void loop() {
-  // Le code principal ici (tu peux ajouter des interactions)
+
+void loop()
+{
 }
