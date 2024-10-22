@@ -33,8 +33,8 @@ unsigned long debutAppuiBouton = 0;
 /*-----Prototypes des fonctions-----*/
 void modeConfig();
 void modeStandard();
-void modeEco();
-void modeMaint();
+void modeEconomique();
+void modeMaintenance();
 Capteurs lireCapteurs();
 String lireHeure();
 void sauvegarderCSV(Capteurs capteurs, String time);
@@ -97,13 +97,13 @@ void modeStandard() {
     // Logique pour le mode standard
 }
 
-void modeEco() {
+void modeEconomique() {
     lcd.clear();
     lcd.print("Mode Eco actif");
     // Logique pour le mode économique
 }
 
-void modeMaint() {
+void modeMaintenance() {
     lcd.clear();
     lcd.print("Mode Maint actif");
     // Logique pour le mode maintenance
@@ -190,7 +190,7 @@ void loop() {
             modeCourant = (modeCourant + 1) % 4; // Passer au mode suivant
             switch (modeCourant) {
                 case CONFIGURATION:
-                    modeConfig();
+                    modeConfiguration();
                     break;
 
                 case STANDARD:
@@ -198,11 +198,11 @@ void loop() {
                     break;
 
                 case ECONOMIQUE:
-                    modeEco();
+                    modeEconomique();
                     break;
 
                 case MAINTENANCE:
-                    modeMaint();
+                    modeMaintenance();
                     break;
             }
         }
