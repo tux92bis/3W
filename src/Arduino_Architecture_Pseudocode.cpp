@@ -5,6 +5,7 @@
 
 // Déclarations et Définitions
 #define BOUTON_ROUGE 2
+#define BOUTON_VERT 3
 #define LED_PIN 7
 #define CONFIGURATION 0
 #define STANDARD 1
@@ -12,7 +13,8 @@
 #define MAINTENANCE 3
 
 int modeCourant = STANDARD;
-volatile bool boutonAppuye = false;
+volatile bool boutonAppuyeVERT = false;
+volatile bool boutonAppuyeROUGE = false;
 Capteurs capteurs;
 
 // Prototypes
@@ -71,7 +73,7 @@ void clignoterLED() {
 void onButtonPress() { boutonAppuye = true; }
 
 // Fonction pour changer de mode
-void changerMode() {
+void changerMode(bool ) {
     modeCourant = (modeCourant + 1) % 4;
     switch (modeCourant) {
         case CONFIGURATION: modeConfig(); break;
