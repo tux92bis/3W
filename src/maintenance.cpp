@@ -6,7 +6,7 @@ LED_ROUGE = broche 7
 LED_VERT = broche 6
 LED_BLEU = broche 5
 */
-void couleurLedStandard() {
+void couleurLedMaintenance() {
   // Pour afficher une couleur orange à la led
   analogWrite(LED_ROUGE, 255);   
   analogWrite(LED_VERT, 165);
