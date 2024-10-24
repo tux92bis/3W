@@ -1,5 +1,4 @@
 #include "3W.h"
-#include <Arduino.h>
 
 int obtenir_donnees() {
   int valeurLDR = analogRead(ldrPin); // Lecture de la photorésistance 
@@ -27,4 +26,17 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
     } else {
         Serial.println("Erreur d'ouverture du fichier");
     }
+}
+
+/* 
+Macros à ajouter dans le fichier "3W" :
+LED_ROUGE = broche 7
+LED_VERT = broche 6
+LED_BLEU = broche 5
+*/
+void couleurLedStandard() {
+  // Pour afficher une couleur rouge à la led
+  analogWrite(LED_ROUGE, 0);   
+  analogWrite(LED_VERT, 255);
+  analogWrite(LED_BLEU, 0);
 }
