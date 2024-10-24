@@ -1,7 +1,8 @@
 // Pseudo code simplifié pour Arduino, présentant l'architecture du projet
 
 #include <Arduino.h>
-#include "Modules.h"  // Inclut tous les modules : DHT22, LCD, GPS, Horloge, LED RVB, SD
+
+
 
 // Déclarations et Définitions
 #define BOUTON_ROUGE 2

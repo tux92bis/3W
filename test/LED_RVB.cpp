@@ -1,33 +1,18 @@
-#include <ChainableLED.h>
-//Defines the num of LEDs used, The undefined 
-//will be lost control.
-#define NUM_LEDS  1
-
-ChainableLED leds(7, 8, NUM_LEDS);//defines the pin used on arduino.
-
 void setup()
 {
-  //nothing
+  pinMode(7, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
 }
-
-float hue = 0.0;
-boolean up = true;
 
 void loop()
 {
-  for (byte i=0; i<NUM_LEDS; i++)
-    leds.setColorHSB(i, hue, 1.0, 0.5);
-    
-  delay(50);
-    
-  if (up)
-    hue+= 0.025;
-  else
-    hue-= 0.025;
-    
-  if (hue>=1.0 && up)
-    up = false;
-  else if (hue<=0.0 && !up)
-    up = true;
+  analogWrite(7, 255);
+  analogWrite(6, 0);
+  analogWrite(5, 0);
+  delay(1000); // Wait for 1000 millisecond(s)
+  analogWrite(7, 255);
+  analogWrite(6, 255);
+  analogWrite(5, 102);
+  delay(1000); // Wait for 1000 millisecond(s)
 }
-

@@ -1,103 +1,81 @@
-#include <Wire.h>
-#include "wiring_private.h"
-#include <RTClib.h>
+// Date and time functions using a DS3231 RTC connected via I2C and Wire lib
+#include "RTClib.h"
 
-/* Defining the custom TwoWire instance for SAMD21 */
-TwoWire myWire(&sercom0, 6, 5);  // Create the new wire instance assigning it to pin 0 and 1
-extern "C"{
-  void SERCOM0_Handler(void);
+RTC_DS3231 rtc;
 
-  void SERCOM0_Handler(void) {
+char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-    myWire.onService();
-
-  }
-}
-
-/* Creating a new DS3231 object */
-RTC_DS3231 myRTC;
-
-String daysNames[] = {
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-};
-String monthsNames[] = {
-  "-",
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-};
-
-void setup() {
+void setup () {
   Serial.begin(57600);
-  Serial.println("start");
-  
-  unsigned long setupStartTime = millis();
-  /*** Waiting for Serial to be ready or timeout ***/
-  while(!Serial && millis() - setupStartTime < 3000);
 
-  /* 
-   * Initialising pins 6 and 5 to be routed to the SERCOM0 pads 0 and 1 in order
-   * to be used as SDA and SCL. Without this step the periphearl won't be patched through
-  */ 
-  pinPeripheral(6, PIO_SERCOM_ALT);  // PAD[0]   //Assign SDA function to pin 0
-  pinPeripheral(5, PIO_SERCOM_ALT);  // PAD[1]   //Assign SCL function to pin 1
+#ifndef ESP8266
+  while (!Serial); // wait for serial port to connect. Needed for native USB
+#endif
 
-  /* We now pass our custom TwoWire object to the RTC instance */
-  myRTC.begin(&myWire);
-  
-  /* 
-   * From this moment on every operation on the RTC will work as expected
-   * But the i2c bus being used will be the one we manually created using SERCOM0
-  */
+  if (! rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    Serial.flush();
+    while (1) delay(10);
+  }
 
-  /* 
-   * Creating a Date object with 
-   * YEAR, MONTH, DAY (2021, January, 1) 
-   * HOUR, MINUTE, SECONDS (0, 0, 0)
-   * Midnight of January 1st, 2021
-  */
-  DateTime newDT = DateTime(2021, 1, 1, 0, 0, 0);
+  if (rtc.lostPower()) {
+    Serial.println("RTC lost power, let's set the time!");
+    // When time needs to be set on a new device, or after a power loss, the
+    // following line sets the RTC to the date & time this sketch was compiled
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    // This line sets the RTC with an explicit date & time, for example to set
+    // January 21, 2014 at 3am you would call:
+    // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
+  }
 
-  /* Pushing that date/time to the RTC */
-  myRTC.adjust(newDT);
-  Serial.println("setup done");
+  // When time needs to be re-set on a previously configured device, the
+  // following line sets the RTC to the date & time this sketch was compiled
+  // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  // This line sets the RTC with an explicit date & time, for example to set
+  // January 21, 2014 at 3am you would call:
+  // rtc.adjust(DateTime(2014, 1, 21, 3, 0, 0));
 }
 
-void loop() {
-  /* creating a temporary date/time object to store the data coming from the RTC */
-  DateTime dt = myRTC.now();
+void loop () {
+    DateTime now = rtc.now();
 
-  /* printing that data to the Serial port in a meaningful format */ 
-  Serial.println("************");
-  Serial.print(daysNames[dt.dayOfTheWeek()]);
-  Serial.print(" ");
-  Serial.print(monthsNames[dt.month()]);
-  Serial.print(" ");
-  Serial.print(dt.day());
-  Serial.print(", ");
-  Serial.println(dt.year());
-  Serial.print(dt.hour());
-  Serial.print(":");
-  Serial.print(dt.minute());
-  Serial.print(":");
-  Serial.println(dt.second());
-  /* Delays are bad, but let's not flood the Serial for this silly example */
-  delay(500);
+    Serial.print(now.year(), DEC);
+    Serial.print('/');
+    Serial.print(now.month(), DEC);
+    Serial.print('/');
+    Serial.print(now.day(), DEC);
+    Serial.print(" (");
+    Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
+    Serial.print(") ");
+    Serial.print(now.hour(), DEC);
+    Serial.print(':');
+    Serial.print(now.minute(), DEC);
+    Serial.print(':');
+    Serial.print(now.second(), DEC);
+    Serial.println();
+
+    Serial.print(" since midnight 1/1/1970 = ");
+    Serial.print(now.unixtime());
+    Serial.print("s = ");
+    Serial.print(now.unixtime() / 86400L);
+    Serial.println("d");
+
+    // calculate a date which is 7 days, 12 hours, 30 minutes, 6 seconds into the future
+    DateTime future (now + TimeSpan(7,12,30,6));
+
+    Serial.print(" now + 7d + 12h + 30m + 6s: ");
+    Serial.print(future.year(), DEC);
+    Serial.print('/');
+    Serial.print(future.month(), DEC);
+    Serial.print('/');
+    Serial.print(future.day(), DEC);
+    Serial.print(' ');
+    Serial.print(future.hour(), DEC);
+    Serial.print(':');
+    Serial.print(future.minute(), DEC);
+    Serial.print(':');
+    Serial.print(future.second(), DEC);
+    Serial.println();
+    Serial.println();
+    delay(3000);
 }
-
-
