@@ -2,6 +2,7 @@
 
 
 /*-----Définition des macros-----*/
+// (à mettre dans le fichier "3W")
 #define BOUTON_ROUGE 2   // Port du bouton rouge
 #define BOUTON_VERT 3   // Port du bouton vert
 #define PHOTORESISTANCE A0   // Port de la photorésistance
@@ -9,6 +10,7 @@
 
 
 /*-----Utiliser pour basculer entre chaque mode-----*/
+// (à mettre dans le fichier "3W")
 #define CONFIGURATION 0   
 #define STANDARD 1
 #define ECONOMIQUE 2
@@ -16,6 +18,7 @@
 
 
 /*-----structure des données pour le capteur-----*/
+// (à mettre dans le fichier "standart")
 typedef struct {
     float temperatureAir;
     float hygrometrie;
@@ -24,6 +27,7 @@ typedef struct {
 
 
 /*-----Déclaration des variables globales-----*/
+// (à mettre dans le fichier "3W")
 Capteurs capteurs;
 int modeCourant = STANDARD;
 volatile bool boutonAppuye = false;
@@ -31,6 +35,7 @@ unsigned long debutAppuiBouton = 0;
 
 
 /*-----Prototypes des fonctions-----*/
+// (à mettre dans le fichier "3W")
 void modeConfig();
 void modeStandard();
 void modeEconomique();
@@ -42,7 +47,8 @@ void onButtonPress();
 void clignoterLED();
 
 
-/*-----Fonction pour obtenir les lectures des capteurs-----*/ 
+/*-----Fonction pour obtenir les lectures des capteurs-----*/
+// (à mettre dans le fichier "standart")
 Capteurs get_data() {
     Capteurs data;
     data.lumiere = analogRead(PHOTORESISTANCE); // Lecture de la photorésistance
@@ -53,6 +59,7 @@ Capteurs get_data() {
 
 
 /*-----Fonction pour obtenir l'heure actuelle-----*/ 
+// (à mettre dans le fichier "standart")
 String get_time() {
     DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
 
@@ -64,6 +71,7 @@ String get_time() {
 
 
 /*-----Fonction pour sauvegarder les données dans un fichier CSV-----*/ 
+// (à mettre dans le fichier "standart")
 void save_data_csv(Capteurs capteurs, String time) {
     File dataFile = SD.open("data.csv", FILE_WRITE);
 
@@ -85,6 +93,7 @@ void save_data_csv(Capteurs capteurs, String time) {
 
 
 /*-----Fonctions pour les différents modes-----*/
+// (à mettre dans des fichiers respectifs")
 void modeConfig() {
     lcd.clear();
     lcd.print("Mode Config actif");
@@ -110,11 +119,13 @@ void modeMaintenance() {
 }
 
 // Fonction d'interruption pour gérer l'appui sur le bouton
+// (à mettre dans un fichier à part)
 void onButtonPress() {
     boutonAppuye = true;
 }
 
 // Fonction pour faire clignoter la LED selon le mode
+// (à mettre dans un fichier à part)
 void clignoterLED() {
     static unsigned long dernierTemps = 0;
     static bool etatLED = LOW;
