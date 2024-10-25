@@ -6,7 +6,7 @@
 #include <RTClib.h>         /* Pour la bibliothèque RTC */
 #include <LED_RVB.h>        /* Bibliothèque pour gérer la LED RVB */
 
-extern LiquidCrystal lcd;  /* L'écran LCD
+extern LiquidCrystal lcd;  /* L'écran LCD */
 extern LED_RVB ledRVB;     /* LED RVB pour les indicateurs de mode */
 extern RTC_DS1307 rtc;     /* RTC pour gérer l'horloge */
 
