@@ -1,12 +1,15 @@
-#include "3W.h"   // Inclus notre fichier en-tête
-#include <string.h>
+//#include "3W.h"   // Inclus notre fichier en-tête
 
 /*-----Définition des macros-----*/
 // (à mettre dans le fichier "3W")
 #define BOUTON_ROUGE 2   // Port du bouton rouge
 #define BOUTON_VERT 3   // Port du bouton vert
-#define PHOTORESISTANCE A0   // Port de la photorésistance
-#define LED_PIN 7   // Port de la LED
+//#define PHOTORESISTANCE A0   // Port de la photorésistance
+//#define LED_PIN 7   // Port de la LED
+#define LED_ROUGE 7   // port de la couleur rouge pour la LED
+#define LED_BLEU 6    // port de la couleur bleu pour la LED
+#define LED_VERT 5    // port de la couleur vert pour la LED
+
 
 
 /*-----Utiliser pour basculer entre chaque mode-----*/
@@ -19,39 +22,79 @@
 
 /*-----structure des données pour le capteur-----*/
 // (à mettre dans le fichier "standard")
+/*
 typedef struct {
     float temperatureAir;
     float hygrometrie;
     int lumiere;
 } Capteurs;
+*/
 
 
 /*-----Déclaration des variables globales-----*/
 // (à mettre dans le fichier "3W")
-Capteurs capteurs;
-int modeActuel = STANDARD;
-int modePrecedent = STANDARD;
-volatile bool boutonAppuyeVert = false;
-volatile bool boutonAppuyeRouge = false;
+
+//Capteurs capteurs;
+int modeActuel = STANDARD;   // Pour savoir à quel mode on se trouve actuellement
+int modePrecedent = STANDARD;   // Pour connaître le mode précedent (utile si on est en mode maintenance)
+volatile bool boutonAppuyeVert = false;   // Pour connaître l'état du bouton vert
+volatile bool boutonAppuyeRouge = false;   // Pour connaître l'état du bouton rouge
 unsigned long dureeAppui = 0;   // Pour mesurer le temps d'appuie
 
 
+
 /*-----Prototypes des fonctions-----*/
-// (à mettre dans le fichier "3W")
-void modeConfiguration();
-void modeStandard();
-void modeEconomique();
-void modeMaintenance();
-Capteurs lireCapteurs();
-String lireHeure();
-void sauvegarderCSV(Capteurs capteurs, String time);
+/*-----(à mettre dans le fichier "3W")-----*/
+//void modeConfiguration();
+//void modeStandard();
+//void modeEconomique();
+//void modeMaintenance();
+//Capteurs lireCapteurs();
+//String lireHeure();
+//void sauvegarderCSV(Capteurs capteurs, String time);
 void boutonRougePresser();
 void boutonVertPresser();
-void clignoterLED();
+//void clignoterLED();
+void couleurLedMaintenance();
+void couleurLedStandard();
+void couleurLedConfiguration();
+void couleurLedEconomie();
+  
+
+/*On test les couleurs*/
+/*-----(à mettre dans les fichier respectifs)-----*/
+void couleurLedMaintenance() {
+  // Pour afficher une couleur orange à la led
+  analogWrite(LED_ROUGE, 255);   
+  analogWrite(LED_VERT, 50);
+  analogWrite(LED_BLEU, 0);
+}
+
+void couleurLedStandard() {
+  // Pour afficher une couleur vert à la led
+  analogWrite(LED_ROUGE, 0);   
+  analogWrite(LED_VERT, 255);
+  analogWrite(LED_BLEU, 0);
+}
+
+void couleurLedConfiguration() {
+  // Pour afficher une couleur jaune à la led
+  analogWrite(LED_ROUGE, 255);   
+  analogWrite(LED_VERT, 255);
+  analogWrite(LED_BLEU, 0);
+}
+
+void couleurLedEconomique() {
+  // Pour afficher une couleur bleu à la led
+  analogWrite(LED_ROUGE, 0);   
+  analogWrite(LED_VERT, 0);
+  analogWrite(LED_BLEU, 255);
+}
 
 
 /*-----Fonction pour obtenir les lectures des capteurs-----*/
-// (à mettre dans le fichier "standard")
+/*-----(à mettre dans le fichier "standard")-----*/
+/*
 Capteurs get_data() {
     Capteurs data;
     data.lumiere = analogRead(PHOTORESISTANCE); // Lecture de la photorésistance
@@ -59,10 +102,12 @@ Capteurs get_data() {
     data.hygrometrie = dht.readHumidity(); // Lecture de l'humidité
     return data;
 }
+*/
 
 
 /*-----Fonction pour obtenir l'heure actuelle-----*/ 
-// (à mettre dans le fichier "standard")
+/*-----(à mettre dans le fichier "standard")-----*/
+/*
 String get_time() {
     DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
 
@@ -71,10 +116,12 @@ String get_time() {
 
     return time;
 }
+*/
 
 
 /*-----Fonction pour sauvegarder les données dans un fichier CSV-----*/ 
-// (à mettre dans le fichier "standard")
+/*-----(à mettre dans le fichier "standard")-----*/
+/*
 void save_data_csv(Capteurs capteurs, String time) {
     File dataFile = SD.open("data.csv", FILE_WRITE);
 
@@ -93,15 +140,18 @@ void save_data_csv(Capteurs capteurs, String time) {
         Serial.println("Erreur d'ouverture du fichier");
     }
 }
+*/
 
 
 /*-----Fonctions pour les différents modes-----*/
-// (à mettre dans des fichiers respectifs")
+/*-----(à mettre dans leurs fichier respectifs)-----*/
+/*
 void modeConfig() {
     lcd.clear();
     lcd.print("Mode Config actif");
     // Logique pour le mode configuration
 }
+
 
 void modeStandard() {
     lcd.clear();
@@ -120,20 +170,24 @@ void modeMaintenance() {
     lcd.print("Mode Maint actif");
     // Logique pour le mode maintenance
 }
+*/
 
 // Fonction d'interruption pour gérer l'appui sur le bouton
-// (à mettre dans un fichier à part)
+/*-----(à mettre dans le fichier à part)-----*/
 void boutonRougePresser() {
     boutonAppuyeRouge = true;
+  	Serial.println("Interruption bouton rouge !");
 }
 
 void boutonVertPresser() {
     boutonAppuyeVert = true;
+  	Serial.println("Interruption bouton vert !");
 }
 
 
 // Fonction pour faire clignoter la LED selon le mode
-// (à mettre dans un fichier à part)
+/*-----(à mettre dans le fichier à part)-----*/
+/*
 void clignoterLED() {
     static unsigned long dernierTemps = 0;
     static bool etatLED = LOW;
@@ -163,6 +217,7 @@ void clignoterLED() {
         digitalWrite(LED_PIN, etatLED);
     }
 }
+*/
 
 void setup() {
     Serial.begin(9600);
@@ -171,28 +226,35 @@ void setup() {
     pinMode(BOUTON_ROUGE, INPUT_PULLUP);
     pinMode(BOUTON_VERT, INPUT);
 
-    // initialisation de la led
-    pinMode(LED_PIN, OUTPUT);
+    // Initialisation de la led
+    //pinMode(LED_PIN, OUTPUT);
+  	pinMode(LED_ROUGE, OUTPUT);
+ 	pinMode(LED_VERT, OUTPUT);
+  	pinMode(LED_BLEU, OUTPUT);
 
     // Initialisation des interruptions
-    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, FALLING);
-    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, FALLING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, RISING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, RISING);
 
-    initModules();  // Initialise tous les modules comme DHT, LCD, etc.
-    modeStandard(); // Démarre en mode standard
+    //initModules();  // Initialise tous les modules comme DHT, LCD, etc.
+    couleurLedStandard(); // Démarre en mode standard
 
     /*-----Initialisation des capteurs et modules (DHT, Écran LCD, GPS, Horloge, LED RVB, SD card)-----*/
-    dht.begin(); // Initialisation du capteur DHT22
+    /*
+  	dht.begin(); // Initialisation du capteur DHT22
     lcd.begin(16, 2); // Initialisation de l'écran LCD 16x2
     gps.begin(9600); // Initialisation du GPS
     rtc.begin(); // Initialisation de l'horloge RTC
     ledRVB.init(); // Initialisation de la LED RVB
+    */
     
+  	/*
     if (!SD.begin(4)) { 
         // Initialisation de la carte SD (CS sur pin 4)
         lcd.clear();
         lcd.print("Erreur init SD");
     }
+    */
 
     // Si bouton rouge appuyer au démarrage
     if (boutonAppuyeRouge) {    
@@ -202,24 +264,27 @@ void setup() {
 }
 
 void loop() {
-    if (modeActuel == STANDARD) {
+    
+  	if (modeActuel == STANDARD) {
         
         // Si le bouton rouge à été presser pendant le mode standard
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == LOW) {
+            while (digitalRead(BOUTON_ROUGE) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 5000) { 
+            if (dureeAppui >= 1000) { 
                 modeActuel = MAINTENANCE;   // Passage en mode maintenance
 
                 // Pour retourner en mode standard lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode standard
-                modePrecedent = STANDARD;   
+                modePrecedent = STANDARD;  
+              
+              	Serial.println("Mode maintenance enclencher");
             }
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
@@ -229,15 +294,17 @@ void loop() {
         if (boutonAppuyeVert) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_VERT) == LOW) {
+            while (digitalRead(BOUTON_VERT) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 5000) { 
-                modeActuel = ECONOMIQUE;   // Passage en mode economique 
+            if (dureeAppui >= 1000) { 
+                modeActuel = ECONOMIQUE;   // Passage en mode economique
+              
+              	Serial.println("Mode economique enclencher");
             }
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
@@ -251,15 +318,16 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == LOW) {
+            while (digitalRead(BOUTON_ROUGE) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 5000) { 
+            if (dureeAppui >= 1000) { 
                 modeActuel = modePrecedent;   // Pour retourner dans le mode precedent car on quitte le mode maintenance  
+                Serial.println("Mode precedent enclencher");
             }
         }
     }
@@ -271,18 +339,20 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == LOW) {
+            while (digitalRead(BOUTON_ROUGE) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 5000) { 
+            if (dureeAppui >= 1000) { 
                 modeActuel = MAINTENANCE;   // Passage en mode maintenance 
 
                 // Pour retourner en mode economique lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode economique
                 modePrecedent = ECONOMIQUE;
+              
+              	Serial.println("Mode maintenance enclencher");
             }
         }
 
@@ -290,25 +360,28 @@ void loop() {
         if (boutonAppuyeVert) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_VERT) == LOW) {
+            while (digitalRead(BOUTON_VERT) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 5000) { 
+            if (dureeAppui >= 1000) { 
                 modeActuel = STANDARD;   // Passage en mode standard
 
                 // Pour retourner en mode standard lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode standard
                 modePrecedent = STANDARD;
+              
+              	Serial.println("Mode standard enclencher");
             }
         }
     }
     
 
     // Lecture des capteurs
-    capteurs = get_data();
+    /*
+  	capteurs = get_data();
     String time = get_time();
 
     // Sauvegarde des données
@@ -316,23 +389,33 @@ void loop() {
 
     // Faire clignoter la LED en fonction du mode
     clignoterLED();
-
+	*/
+  	
     // execution du mode actuel
     if (modeActuel == CONFIGURATION) {
-        modeConfiguration();
+        couleurLedConfiguration();
+        //modeConfiguration();
     }
 
     if (modeActuel == ECONOMIQUE) {
-        modeEconomique();
+        couleurLedEconomique();
+        //modeEconomique();
     }
 
     if (modeActuel == MAINTENANCE) {
-        modeMaintenance();
+        couleurLedMaintenance();
+        //modeMaintenance();
     }
 
     if (modeActuel == STANDARD) {
-        modeStandard();
+        couleurLedStandard();
+        //modeStandard();
     }
 
-    delay(1000); // Attente d'une seconde avant la prochaine lecture
+  	//couleurLedMaintenance();  // couleur orange
+  	//couleurLedStandard();  // vert
+  	//couleurLedConfiguration();  // couleur jaune
+  	//couleurLedEconomie();  // couleur bleu
+    
+  	//delay(1000); // Attente d'une seconde avant la prochaine lecture
 }
