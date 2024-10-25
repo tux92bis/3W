@@ -6,9 +6,9 @@
 #include <RTClib.h>         /* Pour la bibliothèque RTC */
 #include <LED_RVB.h>        /* Bibliothèque pour gérer la LED RVB */
 
-extern LiquidCrystal lcd;  // L'écran LCD utilisé dans ton fichier main
-extern LED_RVB ledRVB;     // LED RVB pour les indicateurs de mode
-extern RTC_DS1307 rtc;     // RTC pour gérer l'horloge
+extern LiquidCrystal lcd;  /* L'écran LCD
+extern LED_RVB ledRVB;     /* LED RVB pour les indicateurs de mode */
+extern RTC_DS1307 rtc;     /* RTC pour gérer l'horloge */
 
 // Variables des paramètres de configuration
 int logInterval = 10;      // Intervalle de mesure (en minutes)
@@ -48,16 +48,16 @@ void modeConfig() {
     ledRVB.setColor(255, 255, 0);  // LED jaune continue pour le mode configuration
     Serial.println("=== Mode Configuration ===");
     Serial.println("Commandes disponibles : ");
-    Serial.println("LOG_INTERVAL=x   (en minutes)");
-    Serial.println("FILE_MAX_SIZE=x  (en octets)");
-    Serial.println("TIMEOUT=x        (en secondes)");
-    Serial.println("LUMIN=x          (activation 1/0)");
-    Serial.println("LUMIN_LOW=x      (seuil bas de luminosité)");
-    Serial.println("LUMIN_HIGH=x     (seuil haut de luminosité)");
-    Serial.println("RESET            (réinitialise les valeurs par défaut)");
-    Serial.println("VERSION          (affiche la version du programme)");
-    Serial.println("CLOCK            (configurer l'heure)");
-    Serial.println("DATE             (configurer la date)");
+    Serial.println("LOG_INTERVAL=x (en minutes)");
+    Serial.println("FILE_MAX_SIZE=x (en octets)");
+    Serial.println("TIMEOUT=x  (en secondes)");
+    Serial.println("LUMIN=x  (activation 1/0)");
+    Serial.println("LUMIN_LOW=x (seuil bas de luminosité)");
+    Serial.println("LUMIN_HIGH=x (seuil haut de luminosité)");
+    Serial.println("RESET (réinitialise les valeurs par défaut)");
+    Serial.println("VERSION (affiche la version du programme)");
+    Serial.println("CLOCK (configurer l'heure)");
+    Serial.println("DATE (configurer la date)");
     lastActivityTime = millis();  // Réinitialiser le compteur d'inactivité
 
     while (true) {
