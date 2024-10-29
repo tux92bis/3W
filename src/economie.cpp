@@ -1,5 +1,5 @@
 #include "3W.h"
-
+#include <Arduino.h>
 /* 
 Macros à ajouter dans le fichier "3W" :
 LED_ROUGE = broche 7

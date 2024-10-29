@@ -1,4 +1,5 @@
 #include "3W.h" // Inclusion du fichier en-tête
+#include <Arduino.h>
 
 extern int modeCourant;  // Mode courant défini dans main.cpp
 extern Capteurs capteurs;  // Structure des capteurs

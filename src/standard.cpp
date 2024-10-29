@@ -1,4 +1,5 @@
 #include "3W.h"
+#include <Arduino.h>
 
 int obtenir_donnees() {
   int valeurLDR = analogRead(ldrPin); // Lecture de la photorésistance 

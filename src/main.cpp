@@ -1,5 +1,5 @@
 //#include "3W.h"   // Inclus notre fichier en-tête
-
+#include <Arduino.h>
 /*-----Définition des macros-----*/
 // (à mettre dans le fichier "3W")
 #define BOUTON_ROUGE 2   // Port du bouton rouge
