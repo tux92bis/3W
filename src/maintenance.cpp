@@ -1,5 +1,10 @@
-#include "3W.h" // Inclusion du fichier en-tête
+/*
+#include "3W.h"
 #include <Arduino.h>
+#include <DHT.h>      // bibliothèque pour le DHT
+#include <SD.h>       // bibliothèque pour la carte SD
+#include <Wire.h>     // bibliothèque Wire pour le RTC
+#include <RTClib.h>   // bibliothèque pour le RTC
 
 extern int modeCourant;  // Mode courant défini dans main.cpp
 extern Capteurs capteurs;  // Structure des capteurs
@@ -20,6 +25,20 @@ void modeMaintenance() {
 
         // Envoyer les données des capteurs au port série sous format CSV
         Serial.print(time);
+        Serial.print(",");
+        Serial.print(capteurs.temperatureAir);
+        Serial.print(",");
+        Serial.print(capteurs.hygrometrie);
+        Serial.print(",");
+        Serial.println(capteurs.lumiere);
+
+        delay(1000);  // Attente d'une seconde entre chaque lecture
+    }
+
+    // Une fois que l'on quitte le mode maintenance, on peut remettre la carte SD en sécurité
+    Serial.println("Vous pouvez remettre la carte SD en toute sécurité.");
+}
+*/
         Serial.print(",");
         Serial.print(capteurs.temperatureAir);
         Serial.print(",");
