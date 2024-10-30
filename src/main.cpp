@@ -1,24 +1,4 @@
-//#include "3W.h"   // Inclus notre fichier en-tête
-#include <Arduino.h>
-/*-----Définition des macros-----*/
-// (à mettre dans le fichier "3W")
-#define BOUTON_ROUGE 2   // Port du bouton rouge
-#define BOUTON_VERT 3   // Port du bouton vert
-//#define PHOTORESISTANCE A0   // Port de la photorésistance
-//#define LED_PIN 7   // Port de la LED
-#define LED_ROUGE 8   // port de la couleur rouge pour la LED
-#define LED_BLEU 10    // port de la couleur bleu pour la LED
-#define LED_VERT 9    // port de la couleur vert pour la LED
-
-
-
-/*-----Utiliser pour basculer entre chaque mode-----*/
-// (à mettre dans le fichier "3W")
-#define CONFIGURATION 0   
-#define STANDARD 1
-#define ECONOMIQUE 2
-#define MAINTENANCE 3
-
+#include "3W.h"   // Inclus notre fichier en-tête
 
 /*-----structure des données pour le capteur-----*/
 // (à mettre dans le fichier "standard")
@@ -29,161 +9,6 @@ typedef struct {
     int lumiere;
 } Capteurs;
 */
-
-
-/*-----Déclaration des variables globales-----*/
-// (à mettre dans le fichier "3W")
-
-//Capteurs capteurs;
-int modeActuel = STANDARD;   // Pour savoir à quel mode on se trouve actuellement
-int modePrecedent = STANDARD;   // Pour connaître le mode précedent (utile si on est en mode maintenance)
-volatile bool boutonAppuyeVert = false;   // Pour connaître l'état du bouton vert
-volatile bool boutonAppuyeRouge = false;   // Pour connaître l'état du bouton rouge
-unsigned long dureeAppui = 0;   // Pour mesurer le temps d'appuie
-
-
-
-/*-----Prototypes des fonctions-----*/
-/*-----(à mettre dans le fichier "3W")-----*/
-//void modeConfiguration();
-//void modeStandard();
-//void modeEconomique();
-//void modeMaintenance();
-//Capteurs lireCapteurs();
-//String lireHeure();
-//void sauvegarderCSV(Capteurs capteurs, String time);
-void boutonRougePresser();
-void boutonVertPresser();
-//void clignoterLED();
-void couleurLedMaintenance();
-void couleurLedStandard();
-void couleurLedConfiguration();
-void couleurLedEconomie();
-  
-
-/*On test les couleurs*/
-/*-----(à mettre dans les fichier respectifs)-----*/
-void couleurLedMaintenance() {
-  // Pour afficher une couleur orange à la led
-  analogWrite(LED_ROUGE, 255);   
-  analogWrite(LED_VERT, 50);
-  analogWrite(LED_BLEU, 0);
-}
-
-void couleurLedStandard() {
-  // Pour afficher une couleur vert à la led
-  analogWrite(LED_ROUGE, 0);   
-  analogWrite(LED_VERT, 255);
-  analogWrite(LED_BLEU, 0);
-}
-
-void couleurLedConfiguration() {
-  // Pour afficher une couleur jaune à la led
-  analogWrite(LED_ROUGE, 255);   
-  analogWrite(LED_VERT, 255);
-  analogWrite(LED_BLEU, 0);
-}
-
-void couleurLedEconomique() {
-  // Pour afficher une couleur bleu à la led
-  analogWrite(LED_ROUGE, 0);   
-  analogWrite(LED_VERT, 0);
-  analogWrite(LED_BLEU, 255);
-}
-
-
-/*-----Fonction pour obtenir les lectures des capteurs-----*/
-/*-----(à mettre dans le fichier "standard")-----*/
-/*
-Capteurs get_data() {
-    Capteurs data;
-    data.lumiere = analogRead(PHOTORESISTANCE); // Lecture de la photorésistance
-    data.temperatureAir = dht.readTemperature(); // Lecture de la température
-    data.hygrometrie = dht.readHumidity(); // Lecture de l'humidité
-    return data;
-}
-*/
-
-
-/*-----Fonction pour obtenir l'heure actuelle-----*/ 
-/*-----(à mettre dans le fichier "standard")-----*/
-/*
-String get_time() {
-    DateTime now = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
-
-    String time = String(now.year()) + "-" + String(now.month()) + "-" + String(now.day()) + " " +
-                  String(now.hour()) + ":" + String(now.minute()) + ":" + String(now.second());
-
-    return time;
-}
-*/
-
-
-/*-----Fonction pour sauvegarder les données dans un fichier CSV-----*/ 
-/*-----(à mettre dans le fichier "standard")-----*/
-/*
-void save_data_csv(Capteurs capteurs, String time) {
-    File dataFile = SD.open("data.csv", FILE_WRITE);
-
-    if (dataFile) {
-        dataFile.print(time);            // Sauvegarder le temps
-        dataFile.print(",");
-        dataFile.print(capteurs.temperatureAir);     // Sauvegarder la température
-        dataFile.print(",");
-        dataFile.print(capteurs.hygrometrie);        // Sauvegarder l'humidité
-        dataFile.print(",");
-        dataFile.println(capteurs.lumiere);    // Sauvegarder la luminosité
-        dataFile.close();
-    } 
-    
-    else {
-        Serial.println("Erreur d'ouverture du fichier");
-    }
-}
-*/
-
-
-/*-----Fonctions pour les différents modes-----*/
-/*-----(à mettre dans leurs fichier respectifs)-----*/
-/*
-void modeConfig() {
-    lcd.clear();
-    lcd.print("Mode Config actif");
-    // Logique pour le mode configuration
-}
-
-
-void modeStandard() {
-    lcd.clear();
-    lcd.print("Mode Standard actif");
-    // Logique pour le mode standard
-}
-
-void modeEconomique() {
-    lcd.clear();
-    lcd.print("Mode Eco actif");
-    // Logique pour le mode économique
-}
-
-void modeMaintenance() {
-    lcd.clear();
-    lcd.print("Mode Maint actif");
-    // Logique pour le mode maintenance
-}
-*/
-
-// Fonction d'interruption pour gérer l'appui sur le bouton
-/*-----(à mettre dans le fichier à part)-----*/
-void boutonRougePresser() {
-    boutonAppuyeRouge = true;
-  	Serial.println("Interruption bouton rouge !");
-}
-
-void boutonVertPresser() {
-    boutonAppuyeVert = true;
-  	Serial.println("Interruption bouton vert !");
-}
-
 
 // Fonction pour faire clignoter la LED selon le mode
 /*-----(à mettre dans le fichier à part)-----*/
@@ -229,7 +54,7 @@ void setup() {
     // Initialisation de la led
     //pinMode(LED_PIN, OUTPUT);
   	pinMode(LED_ROUGE, OUTPUT);
- 	pinMode(LED_VERT, OUTPUT);
+ 	  pinMode(LED_VERT, OUTPUT);
   	pinMode(LED_BLEU, OUTPUT);
 
     // Initialisation des interruptions
@@ -394,11 +219,11 @@ void loop() {
     // execution du mode actuel
     if (modeActuel == CONFIGURATION) {
         couleurLedConfiguration();
-        //modeConfiguration();
+        modeConfiguration();
     }
 
     if (modeActuel == ECONOMIQUE) {
-        couleurLedEconomique();
+        //couleurLedEconomique();
         //modeEconomique();
     }
 
