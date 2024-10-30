@@ -1,14 +1,19 @@
+/*
 #include "3W.h"
 #include <Arduino.h>
+#include <DHT.h>      // bibliothèque pour le DHT
+#include <SD.h>       // bibliothèque pour la carte SD
+#include <Wire.h>     // bibliothèque Wire pour le RTC
+#include <RTClib.h>   // bibliothèque pour le RTC
 
 int obtenir_donnees() {
-  int valeurLDR = analogRead(ldrPin); // Lecture de la photorésistance 
-  float temperature = dht.readTemperature(); // Lecture de la température
+  int valeurLDR = analogRead(ldrPin); // Lecture de la photorésistance  // la variable "ldrPin" n'est pas déclarer
+  float temperature = dht.readTemperature(); // Lecture de la température   // la variable "dht" n'est pas déclarer
   float humidite = dht.readHumidity(); // Lecture de l'humidité
 }
 
 String obtenir_temps() {
-  DateTime maintenant = rtc.now();  // Obtenir l'heure actuelle depuis le RTC
+  DateTime maintenant = rtc.now();  // Obtenir l'heure actuelle depuis le RTC   // la variable "rtc" n'est pas déclarer
   String temps = String(maintenant.year()) + "-" + String(maintenant.month()) + "-" + String(maintenant.day()) + " " + String(maintenant.hour()) + ":" + String(maintenant.minute()) + ":" + String(maintenant.second());
   return temps;
 }
@@ -28,16 +33,4 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
         Serial.println("Erreur d'ouverture du fichier");
     }
 }
-
-/* 
-Macros à ajouter dans le fichier "3W" :
-LED_ROUGE = broche 7
-LED_VERT = broche 6
-LED_BLEU = broche 5
 */
-void couleurLedStandard() {
-  // Pour afficher une couleur rouge à la led
-  analogWrite(LED_ROUGE, 0);   
-  analogWrite(LED_VERT, 255);
-  analogWrite(LED_BLEU, 0);
-}
