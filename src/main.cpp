@@ -6,9 +6,9 @@
 #define BOUTON_VERT 3   // Port du bouton vert
 //#define PHOTORESISTANCE A0   // Port de la photorésistance
 //#define LED_PIN 7   // Port de la LED
-#define LED_ROUGE 7   // port de la couleur rouge pour la LED
-#define LED_BLEU 6    // port de la couleur bleu pour la LED
-#define LED_VERT 5    // port de la couleur vert pour la LED
+#define LED_ROUGE 8   // port de la couleur rouge pour la LED
+#define LED_BLEU 10    // port de la couleur bleu pour la LED
+#define LED_VERT 9    // port de la couleur vert pour la LED
 
 
 
