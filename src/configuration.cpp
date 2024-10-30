@@ -1,14 +1,17 @@
 #include <EEPROM.h>
 #include <Arduino.h>
 #include "3W.h"
-#include <LiquidCrystal.h>  /* Pour l'écran LCD */
+//#include <LiquidCrystal.h>  /* Pour l'écran LCD */    // mauvais nom de bibliothèque
+#include <LiquidCrystal_I2C.h>    // ajout du bon bibliothèque
 #include <Wire.h>           /* Pour l'horloge RTC */
 #include <RTClib.h>         /* Pour la bibliothèque RTC */
-#include <LED_RVB.h>        /* Bibliothèque pour gérer la LED RVB */
+//#include <LED_RVB.h>        /* Bibliothèque pour gérer la LED RVB */      // Bibliothèque non reconnu, est-ce utile?
 
-extern LiquidCrystal lcd;  /* L'écran LCD */
-extern LED_RVB ledRVB;     /* LED RVB pour les indicateurs de mode */
-extern RTC_DS1307 rtc;     /* RTC pour gérer l'horloge */
+// correction du mot "LiquidCrystal" en "LiquidCrystal_I2C" + suppression de "extern" car pas d'instance d'objet définis autre part + ajout d'argument
+LiquidCrystal_I2C lcd(0x27, 16, 2);  /* L'écran LCD */  
+
+//extern LED_RVB ledRVB;     /* LED RVB pour les indicateurs de mode */     // pas besoins, la couleur des leds sont déja programmer dans le fichier "main.cpp"
+RTC_DS1307 rtc;     /* RTC pour gérer l'horloge */       // Mauvais modèle d'horloge RTC + suppression de "extern" car pas d'instance d'objet définis autre part
 
 // Variables des paramètres de configuration
 int logInterval = 10;      // Intervalle de mesure (en minutes)
@@ -42,10 +45,10 @@ void resetToDefaults() {
 }
 
 // Fonction de configuration
-void modeConfig() {
+void modeConfiguration() {
     lcd.clear();
     lcd.print("Mode Config actif");
-    ledRVB.setColor(255, 255, 0);  // LED jaune continue pour le mode configuration
+    //ledRVB.setColor(255, 255, 0);  // LED jaune continue pour le mode configuration     // Pas besoin
     Serial.println("=== Mode Configuration ===");
     Serial.println("Commandes disponibles : ");
     Serial.println("LOG_INTERVAL=x (en minutes)");
@@ -142,7 +145,7 @@ void modeConfig() {
         // Vérifier si 30 minutes d'inactivité sont écoulées
         if (millis() - lastActivityTime >= 1800000) {  // 30 minutes = 1800000 ms
             Serial.println("Inactivité détectée. Retour au mode standard.");
-            ledRVB.setColor(0, 255, 0);  // LED verte pour indiquer le mode standard
+            //ledRVB.setColor(0, 255, 0);  // LED verte pour indiquer le mode standard    // Pas besoins
             break;  // Sortir du mode configuration
         }
     }
