@@ -11,7 +11,7 @@
 LiquidCrystal_I2C lcd(0x27, 16, 2);  /* L'écran LCD */  
 
 //extern LED_RVB ledRVB;     /* LED RVB pour les indicateurs de mode */     // pas besoins, la couleur des leds sont déja programmer dans le fichier "main.cpp"
-RTC_DS1307 rtc;     /* RTC pour gérer l'horloge */       // Mauvais modèle d'horloge RTC + suppression de "extern" car pas d'instance d'objet définis autre part
+RTC_DS3231 rtc;     /* RTC pour gérer l'horloge */       // Correction du  modèle d'horloge RTC + suppression de "extern" car pas d'instance d'objet définis autre part
 
 // Variables des paramètres de configuration
 int logInterval = 10;      // Intervalle de mesure (en minutes)
