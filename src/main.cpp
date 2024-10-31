@@ -114,11 +114,6 @@ void loop() {
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
         }
-				if (ecritureSD) {
-        			capteurs = get_data();
-            String time = get_time();
-            save_data_csv(capteurs, time);
-						}
         // Si le bouton vert à été presser pendant le mode standard
         if (boutonAppuyeVert) {
             dureeAppui = millis();
