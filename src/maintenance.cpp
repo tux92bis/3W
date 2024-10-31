@@ -11,9 +11,8 @@ void modeMaintenance() {
     Serial.println("Mode Maintenance actif");
 
     // Arrêter l'écriture sur la carte SD
-    ecritureSD = false;
     Serial.println("Écriture sur la carte SD désactivée. Vous pouvez retirer la carte SD en toute sécurité.");
-	 lcd.println("Écriture désactivé")
+	lcd.println("Écriture désactivé")
 
     while (modeCourant == MAINTENANCE) {
         // Lire les données des capteurs
