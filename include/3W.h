@@ -4,6 +4,13 @@
 
 #include <Arduino.h>
 
+// Définition de Capteurs
+typedef struct {
+    float temperatureAir;
+    float hygrometrie;
+    int lumiere;
+} Capteurs;
+
 
 //Définition des macros
 #define BOUTON_ROUGE 2   // Port du bouton rouge
