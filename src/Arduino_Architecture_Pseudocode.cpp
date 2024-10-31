@@ -1,5 +1,5 @@
 // Pseudo code simplifié pour Arduino, présentant l'architecture du projet
-
+/*
 #include <Arduino.h>
 
 
@@ -83,3 +83,4 @@ void changerMode(bool ) {
         case MAINTENANCE: modeMaint(); break;
     }
 }
+*/
