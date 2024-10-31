@@ -1,5 +1,5 @@
 #include "3W.h"   // Inclus notre fichier en-tête
-
+bool ecritureSD = true; // Contrôle l'écriture sur la carte SD
 /*-----structure des données pour le capteur-----*/
 // (à mettre dans le fichier "standard")
 /*
@@ -103,7 +103,7 @@ void loop() {
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 1000) { 
+            if (dureeAppui >= 5000) { 
                 modeActuel = MAINTENANCE;   // Passage en mode maintenance
 
                 // Pour retourner en mode standard lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode standard
@@ -114,7 +114,11 @@ void loop() {
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
         }
-
+				if (ecritureSD) {
+        			capteurs = get_data();
+            String time = get_time();
+            save_data_csv(capteurs, time);
+						}
         // Si le bouton vert à été presser pendant le mode standard
         if (boutonAppuyeVert) {
             dureeAppui = millis();
