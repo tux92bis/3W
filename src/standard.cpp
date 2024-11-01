@@ -34,3 +34,110 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
     }
 }
 */
+
+#include <SD.h>
+#include <SPI.h>
+
+int intervalNormal = 1000;
+int intervalEco = 2000; en ms
+
+struct GPSetDate_t {
+  float latitude;
+  float longitude;
+  int year;
+  int month;
+  int day;
+  int hour;
+  int minute;
+  int second;
+};
+
+struct DHT_t {
+  float humidity;
+  float temperatureC;
+  float temperatureF;
+  float heatIndexC;
+  float heatIndexF;
+};
+
+struct Donnee {
+  GPSetDate_t GPSetDate;
+  int LRD;
+  DHT_t DHT;
+};
+
+// Fonction pour enregistrer les données dans un fichier CSV
+void enregistrerDonnee(const Donnee& data) {
+  File dataFile = SD.open("data_log.csv", FILE_WRITE);
+  
+  if (dataFile) {
+    // Écrit les données GPS sous forme de CSV
+    dataFile.print(data.GPSetDate.latitude, 6);    // Latitude avec 6 décimales
+    dataFile.print(",");
+    dataFile.print(data.GPSetDate.longitude, 6);   // Longitude avec 6 décimales
+    dataFile.print(",");
+    dataFile.print(data.GPSetDate.year);           // Année
+    dataFile.print("/");
+    dataFile.print(data.GPSetDate.month);          // Mois
+    dataFile.print("/");
+    dataFile.print(data.GPSetDate.day);            // Jour
+    dataFile.print(",");
+    if (data.GPSetDate.hour < 10) dataFile.print("0");
+    dataFile.print(data.GPSetDate.hour);           // Heure
+    dataFile.print(":");
+    if (data.GPSetDate.minute < 10) dataFile.print("0");
+    dataFile.print(data.GPSetDate.minute);         // Minute
+    dataFile.print(":");
+    if (data.GPSetDate.second < 10) dataFile.print("0");
+    dataFile.print(data.GPSetDate.second);         // Seconde
+
+    // Écrit la valeur LRD
+    dataFile.print(",");
+    dataFile.print(data.LRD);
+
+    // Écrit les données du capteur DHT sous forme de CSV
+    dataFile.print(",");
+    dataFile.print(data.DHT.humidity);             // Humidité
+    dataFile.print(",");
+    dataFile.print(data.DHT.temperatureC);         // Température en Celsius
+    dataFile.print(",");
+    dataFile.print(data.DHT.temperatureF);         // Température en Fahrenheit
+    dataFile.print(",");
+    dataFile.print(data.DHT.heatIndexC);           // Indice de chaleur en Celsius
+    dataFile.print(",");
+    dataFile.println(data.DHT.heatIndexF);         // Indice de chaleur en Fahrenheit
+
+    dataFile.close();                              // Ferme le fichier après écriture
+    Serial.println("Données enregistrées.");
+  } else {
+    Serial.println("Erreur d'écriture dans le fichier data_log.csv");
+  }
+}
+
+
+void loop() {
+
+  int interval = modeEco ? intervalEco : intervalNormal;
+
+  // Vérifier si l'intervalle est écoulé
+  if (millis() - previousMillis >= interval) {
+    previousMillis = millis(); // Mettre à jour le dernier temps
+
+  // Exemple de données GPS et DHT à enregistrer
+    GPSetDate_t gpsData = {30.236640, -97.821453, 2023, 11, 1, 14, 30, 25};
+    DHT_t dhtData = {55.5, 22.5, 72.5, 24.0, 75.2};
+    int LRD = 100; // Exemple de valeur pour LRD
+
+    Donnee data = {gpsData, LRD, dhtData};
+
+    // Appel de la fonction pour enregistrer les données
+    enregistrerDonnee(data);
+  
+}
+
+
+
+
+
+
+
