@@ -1,6 +1,6 @@
 #include "3W.h" // Inclusion du fichier en-tête
 #include <RTClib.h>
-#include <LiquidCrystal.h>
+#include <LiquidCrystal_I2C.h>
 #include <DHT.h>
 
 extern int modeCourant;      // Mode courant défini dans main.cpp
