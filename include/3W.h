@@ -11,6 +11,8 @@ typedef struct {
     int lumiere;
 } Capteurs;
 
+Capteurs get_data();
+String get_time();
 
 //Définition des macros
 #define BOUTON_ROUGE 2   // Port du bouton rouge
