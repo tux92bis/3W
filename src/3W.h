@@ -20,6 +20,7 @@ typedef struct {
 #define LED_BLEU 10    // port de la couleur bleu pour la LED
 #define LED_VERT 9    // port de la couleur vert pour la LED
 
+#define PHOTORESISTANCE A0  
 
 //Utiliser pour basculer entre chaque mode
 #define CONFIGURATION 0   
