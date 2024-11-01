@@ -3,8 +3,8 @@
 #include "3W.h"
 //#include <LiquidCrystal.h>  /* Pour l'écran LCD */    // mauvais nom de bibliothèque
 #include <LiquidCrystal_I2C.h>    // ajout du bon bibliothèque
-#include <Wire.h>           /* Pour l'horloge RTC */
-#include <RTClib.h>         /* Pour la bibliothèque RTC */
+//#include <Wire.h>           /* Pour l'horloge RTC */
+//#include <RTClib.h>         /* Pour la bibliothèque RTC */
 //#include <LED_RVB.h>        /* Bibliothèque pour gérer la LED RVB */      // Bibliothèque non reconnu, est-ce utile?
 
 // correction du mot "LiquidCrystal" en "LiquidCrystal_I2C" + suppression de "extern" car pas d'instance d'objet définis autre part + ajout d'argument
