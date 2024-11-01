@@ -3,18 +3,14 @@
 #pragma once   // Pour éviter d'appeler plusieurs fichier en-tête identique
 
 #include <Arduino.h>
+#include <RTClib.h>         /* Pour la bibliothèque RTC */
+#include <DHT.h>
+#include <Wire.h>
+//#include <LiquidCrystal_I2C.h>
 
-// Définition de Capteurs
-typedef struct {
-    float temperatureAir;
-    float hygrometrie;
-    int lumiere;
-} Capteurs;
 
-Capteurs get_data();
-String get_time();
-
-//Définition des macros
+//-----Définition des macros-----
+//Pour le fichier "fonction_main.cpp"
 #define BOUTON_ROUGE 2   // Port du bouton rouge
 #define BOUTON_VERT 3   // Port du bouton vert
 
@@ -24,6 +20,7 @@ String get_time();
 
 
 //Utiliser pour basculer entre chaque mode
+//Pour le fichier "main.cpp"
 #define CONFIGURATION 0   
 #define STANDARD 1
 #define ECONOMIQUE 2
@@ -38,6 +35,7 @@ extern volatile bool boutonAppuyeVert;
 extern volatile bool boutonAppuyeRouge;
 extern unsigned long dureeAppui;
 
+
 //Pour le fichier "configuration.cpp"
 extern int logInterval;
 extern int fileMaxSize;
@@ -46,6 +44,58 @@ extern int lumin;
 extern int luminLow;
 extern int luminHigh;
 extern unsigned long lastActivityTime;
+extern RTC_DS3231 rtc;     // RTC pour gérer l'horloge (utiliser aussi dans le fichier "configuration.cpp") 
+
+
+//Pour le fichier "standard.cpp"
+extern int intervalNormal;
+extern int intervalEco;   //en ms
+
+struct GPSetDate_t {
+  float latitude;
+  float longitude;
+  int year;
+  int month;
+  int day;
+  int hour;
+  int minute;
+  int second;
+};
+
+struct DHT_t {
+  float humidity;
+  float temperatureC;
+  float temperatureF;
+  float heatIndexC;
+  float heatIndexF;
+};
+
+struct Donnee {
+  GPSetDate_t GPSetDate;
+  int LRD;
+  DHT_t DHT;
+};
+
+/*
+struct DonneesCapteur {
+  int luminosite;
+  float temperature;
+  float humidite;
+};
+
+#define ldrPin A0   // broche pour lire les données de la luminosité
+extern DHT dht;    // broche + modèle du DHT
+*/
+
+
+//Pour le fichier "maintenance.cpp"
+// Définition de Capteurs
+typedef struct {
+    float temperatureAir;
+    float hygrometrie;
+    int lumiere;
+} Capteurs;
+
 
 
 //Déclaration des fonctions du fichier "fonction_main.cpp"
@@ -60,10 +110,13 @@ void couleurLedEconomie();
 
 //Déclaration des fonctions du fichier "standart.cpp"
 void modeStandard();
-int obtenir_donnees();
+void enregistrerDonnee();
+/*
+//DonneesCapteur obtenir_donnees();
 String obtenir_temps();
 void sauvegarder_donnees_csv();
 void couleurLedStandard();
+*/
 
 
 //Déclaration des fonctions du fichier "configuration.cpp"
@@ -78,3 +131,4 @@ void modeMaintenance();
 
 //Déclaration des fonctions du fichier "economique.cpp"
 void modeEconomique();
+
