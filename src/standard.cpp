@@ -1,6 +1,73 @@
 /*
 #include "3W.h"
 #include <Arduino.h>
+#include <DHT.h>
+#include <SD.h>
+#include <Wire.h>
+#include <RTClib.h>
+
+#define ldrPin A0   // broche pour lire les données de la luminosité
+DHT dht(2, DHT22);    // broche + modèle du DHT
+RTC_DS3231 rtc;   // modèle du RTC
+
+
+DonneesCapteur obtenir_donnees() {
+  DonneesCapteur data;
+  data.luminosite = analogRead(ldrPin);
+  data.temperature = dht.readTemperature();
+  data.humidite = dht.readHumidity();
+  return data;
+}
+
+
+String obtenir_temps() {
+  DateTime maintenant = rtc.now();
+  String temps = String(maintenant.year()) + "-" + String(maintenant.month()) + "-" + String(maintenant.day()) + " " + String(maintenant.hour()) + ":" + String(maintenant.minute()) + ":" + String(maintenant.second());
+  return temps;
+}
+
+
+void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, String temps) {
+    File fichierDonnees = SD.open("donnees.csv", FILE_WRITE);
+    if (fichierDonnees) {
+        fichierDonnees.print(temps);
+        fichierDonnees.print(",");
+        fichierDonnees.print(temperature);
+        fichierDonnees.print(",");
+        fichierDonnees.print(humidite);
+        fichierDonnees.print(",");
+        fichierDonnees.println(luminosite);
+        fichierDonnees.close();
+    } else {
+        Serial.println("Erreur d'ouverture du fichier");
+    }
+}
+*/
+
+/*
+void setup() {
+    Serial.begin(9600);
+    dht.begin();
+    SD.begin(4);
+    if (!rtc.begin()) {
+        Serial.println("Erreur : le RTC n'est pas trouvé !");
+        while (1);
+    }
+}
+
+
+void loop() {
+    DonneesCapteur data = obtenir_donnees();
+    String temps = obtenir_temps();
+    sauvegarder_donnees_csv(data.temperature, data.humidite, data.luminosite, temps);
+    delay(2000);
+}
+*/
+
+
+/*
+#include "3W.h"
+#include <Arduino.h>
 #include <DHT.h>      // bibliothèque pour le DHT
 #include <SD.h>       // bibliothèque pour la carte SD
 #include <Wire.h>     // bibliothèque Wire pour le RTC
@@ -39,7 +106,7 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
 #include <SPI.h>
 
 int intervalNormal = 1000;
-int intervalEco = 2000; en ms
+int intervalEco = 2000;   //en ms
 
 struct GPSetDate_t {
   float latitude;
@@ -115,6 +182,7 @@ void enregistrerDonnee(const Donnee& data) {
 }
 
 
+/*
 void loop() {
 
   int interval = modeEco ? intervalEco : intervalNormal;
@@ -134,10 +202,4 @@ void loop() {
     enregistrerDonnee(data);
   
 }
-
-
-
-
-
-
-
+*/
