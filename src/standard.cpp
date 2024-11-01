@@ -1,12 +1,12 @@
 /*
 #include "3W.h"
 #include <Arduino.h>
-#include <DHT.h>
+//#include <DHT.h>
 #include <SD.h>
-#include <Wire.h>
-#include <RTClib.h>
+//#include <Wire.h>
+//#include <RTClib.h>
 
-#define ldrPin A0   // broche pour lire les données de la luminosité
+//#define ldrPin A0   // broche pour lire les données de la luminosité
 DHT dht(2, DHT22);    // broche + modèle du DHT
 RTC_DS3231 rtc;   // modèle du RTC
 
@@ -43,6 +43,7 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
     }
 }
 */
+
 
 /*
 void setup() {
@@ -102,12 +103,15 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
 }
 */
 
+
+#include "3W.h"
 #include <SD.h>
 #include <SPI.h>
 
 int intervalNormal = 1000;
 int intervalEco = 2000;   //en ms
 
+/*
 struct GPSetDate_t {
   float latitude;
   float longitude;
@@ -132,6 +136,7 @@ struct Donnee {
   int LRD;
   DHT_t DHT;
 };
+*/
 
 // Fonction pour enregistrer les données dans un fichier CSV
 void enregistrerDonnee(const Donnee& data) {
@@ -180,6 +185,7 @@ void enregistrerDonnee(const Donnee& data) {
     Serial.println("Erreur d'écriture dans le fichier data_log.csv");
   }
 }
+
 
 
 /*
