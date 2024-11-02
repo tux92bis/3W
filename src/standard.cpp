@@ -107,6 +107,8 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
 #include "3W.h"
 #include <SD.h>
 #include <SPI.h>
+#include <RTClib.h>
+#include <TinyGPSPlus.h>
 
 int intervalNormal = 1000;
 int intervalEco = 2000;   //en ms
@@ -148,11 +150,14 @@ void enregistrerDonnee(const Donnee& data) {
     dataFile.print(",");
     dataFile.print(gps.location.lng(), 6);   // Longitude avec 6 décimales
     dataFile.print(",");
-    dataFile.print(rtc.now());                     // date
-    
+    // Convert DateTime to string
+    DateTime now = rtc.now();
+    char dateString[20];
+    sprintf(dateString, "%04d-%02d-%02d %02d:%02d:%02d", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
+    dataFile.print(dateString);
     // Écrit la valeur LRD                   // LRD
     dataFile.print(",");
-    dataFile.print(analogRead(LDR));
+    dataFile.print(analogRead(A0));
 
     // Écrit les données du capteur DHT sous forme de CSV
     dataFile.print(",");

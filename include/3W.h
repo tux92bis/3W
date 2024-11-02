@@ -6,12 +6,14 @@
 #include <RTClib.h> /* Pour la bibliothèque RTC */
 #include <DHT.h>
 #include <Wire.h>
+#include <TinyGPSPlus.h>
 // #include <LiquidCrystal_I2C.h>
 
 //-----Définition des macros-----
 // Pour le fichier "fonction_main.cpp"
 #define BOUTON_ROUGE 2 // Port du bouton rouge
 #define BOUTON_VERT 3  // Port du bouton vert
+
 
 #define LED_ROUGE 8 // port de la couleur rouge pour la LED
 #define LED_BLEU 10 // port de la couleur bleu pour la LED
@@ -23,7 +25,7 @@
 #define STANDARD 1
 #define ECONOMIQUE 2
 #define MAINTENANCE 3
-
+#define LDR 
 #define PHOTORESISTANCE A0
 // In a source file (e.g., main.cpp)
 // In the header file (.h)
@@ -46,6 +48,7 @@ extern int luminHigh;
 extern unsigned long lastActivityTime;
 extern RTC_DS3231 rtc; // RTC pour gérer l'horloge (utiliser aussi dans le fichier "configuration.cpp")
 
+TinyGPSPlus gps; // TinyGPSPlus pour gérer les données GPS (utiliser aussi dans le fichier "configuration.cpp")
 // Pour le fichier "standard.cpp"
 extern int intervalNormal;
 extern int intervalEco; // en ms
