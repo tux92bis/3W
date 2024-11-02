@@ -37,11 +37,11 @@ extern volatile bool boutonAppuyeRouge;
 extern unsigned long dureeAppui;
 
 // Pour le fichier "configuration.cpp"
-extern int logInterval;
+extern byte logInterval;
 extern int fileMaxSize;
-extern int timeout;
-extern int lumin;
-extern int luminLow;
+extern byte timeout;
+extern byte lumin;
+extern byte luminLow;
 extern int luminHigh;
 extern unsigned long lastActivityTime;
 extern RTC_DS3231 rtc; // RTC pour gérer l'horloge (utiliser aussi dans le fichier "configuration.cpp")
