@@ -161,7 +161,7 @@ void enregistrerDonnee() {
 
     // Écrit les données du capteur DHT sous forme de CSV
     dataFile.print(",");
-    dataFile.print(data.DHT.humidity);             // Humidité
+    dataFile.print(dht.readHumidity());             // Humidité
     dataFile.print(",");
     dataFile.print(dht.readTemperature());         // Température en Celsius
     dataFile.print(",");
