@@ -66,9 +66,7 @@ struct DHT_t
 {
   float humidity;
   float temperatureC;
-  float temperatureF;
   float heatIndexC;
-  float heatIndexF;
 };
 
 struct Donnee

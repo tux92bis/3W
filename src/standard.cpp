@@ -173,11 +173,9 @@ void enregistrerDonnee(const Donnee& data) {
     dataFile.print(",");
     dataFile.print(data.DHT.temperatureC);         // Température en Celsius
     dataFile.print(",");
-    dataFile.print(data.DHT.temperatureF);         // Température en Fahrenheit
     dataFile.print(",");
     dataFile.print(data.DHT.heatIndexC);           // Indice de chaleur en Celsius
     dataFile.print(",");
-    dataFile.println(data.DHT.heatIndexF);         // Indice de chaleur en Fahrenheit
 
     dataFile.close();                              // Ferme le fichier après écriture
     Serial.println("Données enregistrées.");

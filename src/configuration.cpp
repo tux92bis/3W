@@ -1,7 +1,8 @@
 #include <EEPROM.h>
 #include <Arduino.h>
 #include "3W.h"
-#include <LiquidCrystal_I2C.h>    /* Pour l'écran LCD */
+#include <LiquidCrystal_I2C.h>  
+  /* Pour l'écran LCD */
 //#include <Wire.h>           /* Pour l'horloge RTC */
 //#include <RTClib.h>         /* Pour la bibliothèque RTC */
 
@@ -32,6 +33,7 @@ void saveToEEPROM() {
 
 // Réinitialiser les paramètres par défaut
 void resetToDefaults() {
+    logInterval = 10;
     logInterval = 10;
     fileMaxSize = 4096;
     timeout = 30;
