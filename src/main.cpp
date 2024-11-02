@@ -1,5 +1,26 @@
 #include "3W.h" // Inclus notre fichier en-tête
+#include <SD.h>
+
 bool ecritureSD = true; // Contrôle l'écriture sur la carte SD
+
+void save_data_csv(Capteurs capteurs, String time) {
+    if (ecritureSD) {
+        File dataFile = SD.open("data.csv", FILE_WRITE);
+        if (dataFile) {
+            dataFile.print(time);
+            dataFile.print(",");
+            dataFile.print(capteurs.temperatureAir);
+            dataFile.print(",");
+            dataFile.print(capteurs.hygrometrie);
+            dataFile.print(",");
+            dataFile.println(capteurs.lumiere);
+            dataFile.close();
+        } else {
+            Serial.println("Erreur d'ouverture du fichier");
+        }
+    }
+}
+
 // In a source file (e.g., main.cpp)
 DHT dht(6, DHT22); // Definition and initialization of the DHT object
 /*-----structure des données pour le capteur-----*/

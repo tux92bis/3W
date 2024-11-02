@@ -128,6 +128,8 @@ void sauvegarder_donnees_csv();
 void couleurLedStandard();
 */
 
+void save_data_csv(Capteurs capteurs, String time);
+
 // Déclaration des fonctions du fichier "configuration.cpp"
 void modeConfiguration();
 void saveToEEPROM();

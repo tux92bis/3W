@@ -3,24 +3,11 @@
 #include <LiquidCrystal_I2C.h>
 #include <DHT.h>
 #include <Wire.h>
+#include <SD.h>
+
 extern int modeCourant;      // Mode courant défini dans main.cpp
 extern Capteurs capteurs;    // Structure des capteurs
 extern bool ecritureSD;      // Variable pour gérer l'écriture sur la SD
-
-Capteurs get_data() {
-    Capteurs data;
-    data.lumiere = analogRead(PHOTORESISTANCE);
-    data.temperatureAir = dht.readTemperature();
-    data.hygrometrie = dht.readHumidity();
-    return data;
-}
-
-String get_time() {
-    DateTime now = rtc.now();
-    String time = String(now.year()) + "-" + String(now.month()) + "-" + String(now.day()) + " " +
-                  String(now.hour()) + ":" + String(now.minute()) + ":" + String(now.second());
-    return time;
-}
 
 // Fonction pour passer en mode maintenance
 void modeMaintenance() {
@@ -32,29 +19,32 @@ void modeMaintenance() {
     lcd.print("Mode Maintenance");
     Serial.println("Mode Maintenance actif");
 
-    // Arrêter l'écriture sur la carte SD
-	ecritureSD= false;
+    // Désactiver l'écriture sur la carte SD
+    ecritureSD = false;
     Serial.println("Écriture sur la carte SD désactivée. Vous pouvez retirer la carte SD en toute sécurité.");
-	lcd.println("Écriture désactivé");
+    lcd.setCursor(0, 1);
+    lcd.print("Écriture désactivée");
 
-    while (modeCourant == MAINTENANCE) {
-        // Lire les données des capteurs
-        capteurs = get_data();
-        String time = get_time();
-
-        // Envoyer les données des capteurs au port série sous format CSV
-        Serial.print(time);
-        Serial.print(",");
-        Serial.print(capteurs.temperatureAir);
-        Serial.print(",");
-        Serial.print(capteurs.hygrometrie);
-        Serial.print(",");
-        Serial.println(capteurs.lumiere);
-
-        delay(1000);  // Attente d'une seconde entre chaque lecture
+    // Lire les données du fichier `data.csv` sur la carte SD et les envoyer via le port série
+    File dataFile = SD.open("data.csv");
+    if (dataFile) {
+        Serial.println("Lecture des données enregistrées sur la carte SD :");
+        while (dataFile.available()) {
+            String line = dataFile.readStringUntil('\n');
+            Serial.println(line);  // Envoi de chaque ligne au port série
+            delay(500);  // Délai pour une lecture plus lente
+        }
+        dataFile.close();
+    } else {
+        Serial.println("Erreur : impossible d'ouvrir le fichier data.csv");
     }
 
-    // Une fois que l'on quitte le mode maintenance, on peut réactiver l'écriture sur la carte SD
+    // Attendre la sortie du mode maintenance
+    while (modeCourant == MAINTENANCE) {
+        delay(100);  // Éviter une boucle trop rapide
+    }
+
+    // Réactiver l'écriture sur la carte SD
     Serial.println("Mode maintenance terminé. Vous pouvez replacer la carte SD.");
     ecritureSD = true;
 }
