@@ -27,7 +27,9 @@
 #define MAINTENANCE 3
 
 
-//-----Déclaration des variables globales------
+#define PHOTORESISTANCE A0 
+DHT dht(6, DHT22); // définition port et type de capteur DHT
+//-----Déclaration des variables globales------//
 //Pour le fichier "fonction_main.cpp"
 extern int modeActuel;
 extern int modePrecedent;
