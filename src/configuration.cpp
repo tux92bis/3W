@@ -1,24 +1,22 @@
 #include <EEPROM.h>
 #include <Arduino.h>
 #include "3W.h"
-//#include <LiquidCrystal.h>  /* Pour l'écran LCD */    // mauvais nom de bibliothèque
-#include <LiquidCrystal_I2C.h>    // ajout du bon bibliothèque
+#include <LiquidCrystal_I2C.h>    /* Pour l'écran LCD */
 //#include <Wire.h>           /* Pour l'horloge RTC */
 //#include <RTClib.h>         /* Pour la bibliothèque RTC */
-//#include <LED_RVB.h>        /* Bibliothèque pour gérer la LED RVB */      // Bibliothèque non reconnu, est-ce utile?
 
-// correction du mot "LiquidCrystal" en "LiquidCrystal_I2C" + suppression de "extern" car pas d'instance d'objet définis autre part + ajout d'argument
+
 LiquidCrystal_I2C lcd(0x27, 16, 2);  /* L'écran LCD */  
 
-//extern LED_RVB ledRVB;     /* LED RVB pour les indicateurs de mode */     // pas besoins, la couleur des leds sont déja programmer dans le fichier "main.cpp"
-RTC_DS3231 rtc;     /* RTC pour gérer l'horloge */       // Correction du  modèle d'horloge RTC + suppression de "extern" car pas d'instance d'objet définis autre part
+
+RTC_DS3231 rtc;     /* RTC pour gérer l'horloge */     
 
 // Variables des paramètres de configuration
-int logInterval = 10;      // Intervalle de mesure (en minutes)
+byte logInterval = 10;      // Intervalle de mesure (en minutes)
 int fileMaxSize = 4096;    // Taille maximale du fichier de log (en octets)
-int timeout = 30;          // Timeout des capteurs (en secondes)
-int lumin = 1;             // Activation du capteur de luminosité
-int luminLow = 255;        // Seuil bas pour la luminosité
+byte timeout = 30;          // Timeout des capteurs (en secondes)
+byte lumin = 1;             // Activation du capteur de luminosité
+byte luminLow = 255;        // Seuil bas pour la luminosité
 int luminHigh = 768;       // Seuil haut pour la luminosité
 unsigned long lastActivityTime = 0; // Pour surveiller l'inactivité
 
@@ -48,7 +46,6 @@ void resetToDefaults() {
 void modeConfiguration() {
     lcd.clear();
     lcd.print("Mode Config actif");
-    //ledRVB.setColor(255, 255, 0);  // LED jaune continue pour le mode configuration     // Pas besoin
     Serial.println("=== Mode Configuration ===");
     Serial.println("Commandes disponibles : ");
     Serial.println("LOG_INTERVAL=x (en minutes)");
