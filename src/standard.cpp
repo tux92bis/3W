@@ -144,41 +144,24 @@ void enregistrerDonnee(const Donnee& data) {
   
   if (dataFile) {
     // Écrit les données GPS sous forme de CSV
-    dataFile.print(data.GPSetDate.latitude, 6);    // Latitude avec 6 décimales
+    dataFile.print(gps.location.lat(), 6);    // Latitude avec 6 décimales
     dataFile.print(",");
-    dataFile.print(data.GPSetDate.longitude, 6);   // Longitude avec 6 décimales
+    dataFile.print(gps.location.lng(), 6);   // Longitude avec 6 décimales
     dataFile.print(",");
-    dataFile.print(data.GPSetDate.year);           // Année
-    dataFile.print("/");
-    dataFile.print(data.GPSetDate.month);          // Mois
-    dataFile.print("/");
-    dataFile.print(data.GPSetDate.day);            // Jour
+    dataFile.print(rtc.now());                     // date
+    
+    // Écrit la valeur LRD                   // LRD
     dataFile.print(",");
-    if (data.GPSetDate.hour < 10) dataFile.print("0");
-    dataFile.print(data.GPSetDate.hour);           // Heure
-    dataFile.print(":");
-    if (data.GPSetDate.minute < 10) dataFile.print("0");
-    dataFile.print(data.GPSetDate.minute);         // Minute
-    dataFile.print(":");
-    if (data.GPSetDate.second < 10) dataFile.print("0");
-    dataFile.print(data.GPSetDate.second);         // Seconde
-
-    // Écrit la valeur LRD
-    dataFile.print(",");
-    dataFile.print(data.LRD);
+    dataFile.print(analogRead(LDR));
 
     // Écrit les données du capteur DHT sous forme de CSV
     dataFile.print(",");
     dataFile.print(data.DHT.humidity);             // Humidité
     dataFile.print(",");
-    dataFile.print(data.DHT.temperatureC);         // Température en Celsius
+    dataFile.print(dht.readTemperature());         // Température en Celsius
     dataFile.print(",");
-    dataFile.print(",");
-    dataFile.print(data.DHT.heatIndexC);           // Indice de chaleur en Celsius
-    dataFile.print(",");
-
     dataFile.close();                              // Ferme le fichier après écriture
-    Serial.println("Données enregistrées.");
+   
   } else {
     Serial.println("Erreur d'écriture dans le fichier data_log.csv");
   }
