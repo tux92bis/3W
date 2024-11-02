@@ -2,7 +2,7 @@
 #include <RTClib.h>
 #include <LiquidCrystal_I2C.h>
 #include <DHT.h>
-
+#include <Wire.h>
 extern int modeCourant;      // Mode courant défini dans main.cpp
 extern Capteurs capteurs;    // Structure des capteurs
 extern bool ecritureSD;      // Variable pour gérer l'écriture sur la SD
@@ -24,7 +24,11 @@ String get_time() {
 
 // Fonction pour passer en mode maintenance
 void modeMaintenance() {
-    lcd.clear();
+    // Création de l'objet LCD
+    LiquidCrystal_I2C lcd(0x27, 16, 2);
+    lcd.init();
+    lcd.backlight();
+    lcd.setCursor(0, 0);
     lcd.print("Mode Maintenance");
     Serial.println("Mode Maintenance actif");
 

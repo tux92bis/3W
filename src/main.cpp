@@ -1,5 +1,7 @@
-#include "3W.h"   // Inclus notre fichier en-tête
+#include "3W.h" // Inclus notre fichier en-tête
 bool ecritureSD = true; // Contrôle l'écriture sur la carte SD
+// In a source file (e.g., main.cpp)
+DHT dht(6, DHT22); // Definition and initialization of the DHT object
 /*-----structure des données pour le capteur-----*/
 // (à mettre dans le fichier "standard")
 /*
@@ -46,7 +48,7 @@ void clignoterLED() {
 
 void setup() {
     Serial.begin(9600);
-
+    
     // Initialisation du port des boutons pour capter des entrées
     pinMode(BOUTON_ROUGE, INPUT_PULLUP);
     pinMode(BOUTON_VERT, INPUT);
