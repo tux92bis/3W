@@ -141,8 +141,8 @@ struct Donnee {
 */
 
 // Fonction pour enregistrer les données dans un fichier CSV
-void enregistrerDonnee(const Donnee& data) {
-  File dataFile = SD.open("data_log.csv", FILE_WRITE);
+void enregistrerDonnee() {
+  File dataFile = SD.open("data.csv", FILE_WRITE);
   
   if (dataFile) {
     // Écrit les données GPS sous forme de CSV
@@ -168,7 +168,7 @@ void enregistrerDonnee(const Donnee& data) {
     dataFile.close();                              // Ferme le fichier après écriture
    
   } else {
-    Serial.println("Erreur d'écriture dans le fichier data_log.csv");
+    Serial.println("Erreur d'écriture dans le fichier data.csv");
   }
 }
 
