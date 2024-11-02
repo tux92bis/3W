@@ -1,6 +1,6 @@
 #include <DHT.h>
 
-const int CAPTEUR_TEMP = 2;
+const int CAPTEUR_TEMP = 6;
 
 float t, h;
 
