@@ -168,7 +168,7 @@ void enregistrerDonnee() {
     dataFile.close();                              // Ferme le fichier après écriture
    
   } else {
-    Serial.println("Erreur d'écriture dans le fichier data.csv");
+    Serial.println(f'Erreur d'écriture dans le fichier data.csv');
   }
 }
 
