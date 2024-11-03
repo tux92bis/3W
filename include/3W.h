@@ -1,12 +1,14 @@
 /*-----Fichier Header-----*/
 
 #pragma once // Pour éviter d'appeler plusieurs fichier en-tête identique
-
+#include <EEPROM.h>
 #include <Arduino.h>
 #include <RTClib.h> /* Pour la bibliothèque RTC */
 #include <DHT.h>
 #include <Wire.h>
-// #include <LiquidCrystal_I2C.h>
+#include <LiquidCrystal_I2C.h>
+#include <SD.h>
+
 
 //-----Définition des macros-----
 // Pour le fichier "fonction_main.cpp"
@@ -30,7 +32,7 @@
 // In the header file (.h)
 
 
-
+extern LiquidCrystal_I2C lcd;
 
 extern DHT dht; // Declaration of the external variable // Definition and initialization of the DHT object // définition port et type de capteur DHT
 //-----Déclaration des variables globales------//
@@ -93,9 +95,15 @@ void couleurLedStandard();
 void couleurLedConfiguration();
 void couleurLedEconomie();
 
+// affichage LCD
+
+void affichageStandart();
+void affichageConfiguration();
+void affichageEconomique();
+void affichageMaintenance();
 // Déclaration des fonctions du fichier "standart.cpp"
 void modeStandard();
-void enregistrerDonnee();
+
 /*
 //DonneesCapteur obtenir_donnees();
 String obtenir_temps();

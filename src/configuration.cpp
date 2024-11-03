@@ -1,16 +1,13 @@
-#include <EEPROM.h>
-#include <Arduino.h>
-#include "3W.h"
-#include <LiquidCrystal_I2C.h>  
+
   /* Pour l'écran LCD */
 //#include <Wire.h>           /* Pour l'horloge RTC */
 //#include <RTClib.h>         /* Pour la bibliothèque RTC */
 
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);  /* L'écran LCD */  
+#include "3W.h"
+#include <EEPROM.h>
 
-
-RTC_DS3231 rtc;     /* RTC pour gérer l'horloge */     
+RTC_DS3231 rtc;         
 
 // Variables des paramètres de configuration
 int logInterval = 10;      // Intervalle de mesure (en minutes)
@@ -34,7 +31,6 @@ void saveToEEPROM() {
 // Réinitialiser les paramètres par défaut
 void resetToDefaults() {
     logInterval = 10;
-    logInterval = 10;
     fileMaxSize = 4096;
     timeout = 30;
     lumin = 1;
@@ -46,8 +42,6 @@ void resetToDefaults() {
 
 // Fonction de configuration
 void modeConfiguration() {
-    lcd.clear();
-    lcd.print(F("Mode Config actif"));
     Serial.println(F("=== Mode Configuration ==="));
     Serial.println(F("Commandes disponibles : "));
     Serial.println(F("LOG_INTERVAL=x (en minutes)"));

@@ -1,5 +1,5 @@
 #include "3W.h"
-#include <Arduino.h>
+
 
 
 //Définition des variables globales
@@ -49,4 +49,8 @@ void boutonVertPresser() {
     // Lorsque bouton vert presser
     boutonAppuyeVert = true;
   	Serial.println("Interruption bouton vert !");
+}
+
+void affichageStandart(){
+
 }

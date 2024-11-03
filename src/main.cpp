@@ -1,7 +1,8 @@
  #include "3W.h" // Inclus notre fichier en-tête
 
+
 // In a source file (e.g., main.cpp)
-DHT dht(6, DHT22); // Definition and initialization of the DHT object
+ // Definition and initialization of the DHT object
 /*-----structure des données pour le capteur-----*/
 // (à mettre dans le fichier "standard")
 /*
@@ -46,6 +47,8 @@ void clignoterLED() {
 }
 */
 
+
+
 void setup() {
     Serial.begin(9600);
     
@@ -56,7 +59,7 @@ void setup() {
     // Initialisation de la led
     //pinMode(LED_PIN, OUTPUT);
   	pinMode(LED_ROUGE, OUTPUT);
- 	  pinMode(LED_VERT, OUTPUT);
+ 	pinMode(LED_VERT, OUTPUT);
   	pinMode(LED_BLEU, OUTPUT);
 
     // Initialisation des interruptions
@@ -64,6 +67,9 @@ void setup() {
     attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, RISING);
 
     //initModules();  // Initialise tous les modules comme DHT, LCD, etc.
+    DHT dht(6, DHT22);
+    LiquidCrystal_I2C lcd(0x27, 16, 2);
+    RTC_DS3231 rtc;    
     couleurLedStandard(); // Démarre en mode standard
 
     /*-----Initialisation des capteurs et modules (DHT, Écran LCD, GPS, Horloge, LED RVB, SD card)-----*/
@@ -224,7 +230,9 @@ void loop() {
     }
 
     if (modeActuel == ECONOMIQUE) {
-        //couleurLedEconomique();
+        couleurLedEconomie();
+        modeStandard();
+        delay(logInterval);
         //modeEconomique();
     }
 
@@ -235,7 +243,9 @@ void loop() {
 
     if (modeActuel == STANDARD) {
         couleurLedStandard();
-        //modeStandard();
+        modeStandard();
+        delay(logInterval);
+
     }
 
   	//couleurLedMaintenance();  // couleur orange
