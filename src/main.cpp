@@ -1,25 +1,4 @@
  #include "3W.h" // Inclus notre fichier en-tête
-#include <SD.h>
-
-bool ecritureSD = true; // Contrôle l'écriture sur la carte SD
-
-void save_data_csv(Capteurs capteurs, String time) {
-    if (ecritureSD) {
-        File dataFile = SD.open("data.csv", FILE_WRITE);
-        if (dataFile) {
-            dataFile.print(time);
-            dataFile.print(",");
-            dataFile.print(capteurs.temperatureAir);
-            dataFile.print(",");
-            dataFile.print(capteurs.hygrometrie);
-            dataFile.print(",");
-            dataFile.println(capteurs.lumiere);
-            dataFile.close();
-        } else {
-            Serial.println(F("Erreur d'ouverture du fichier"));
-        }
-    }
-}
 
 // In a source file (e.g., main.cpp)
 DHT dht(6, DHT22); // Definition and initialization of the DHT object
@@ -126,7 +105,7 @@ void loop() {
             dureeAppui = millis() - dureeAppui;   // Pour mesurer le temps d'appui
 
             // Si le bouton est appuyé pendant 5 secondes ou plus
-            if (dureeAppui >= 5000) { 
+            if (dureeAppui >= 1000) { 
                 modeActuel = MAINTENANCE;   // Passage en mode maintenance
 
                 // Pour retourner en mode standard lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode standard
