@@ -16,7 +16,7 @@ void save_data_csv(Capteurs capteurs, String time) {
             dataFile.println(capteurs.lumiere);
             dataFile.close();
         } else {
-            Serial.println("Erreur d'ouverture du fichier");
+            Serial.println(F("Erreur d'ouverture du fichier"));
         }
     }
 }
@@ -132,7 +132,7 @@ void loop() {
                 // Pour retourner en mode standard lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode standard
                 modePrecedent = STANDARD;  
               
-              	Serial.println(f'Mode maintenance enclencher');
+              	Serial.println(F("Mode maintenance enclencher"));
             }
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
@@ -151,7 +151,7 @@ void loop() {
             if (dureeAppui >= 1000) { 
                 modeActuel = ECONOMIQUE;   // Passage en mode economique
               
-              	Serial.println(f'Mode economique enclencher');
+              	Serial.println(F("Mode economique enclencher"));
             }
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton

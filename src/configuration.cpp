@@ -76,31 +76,31 @@ void modeConfiguration() {
             // Commande FILE_MAX_SIZE
             else if (input.startsWith("FILE_MAX_SIZE=")) {
                 fileMaxSize = input.substring(input.indexOf('=') + 1).toInt();
-                Serial.print("Nouvelle taille maximale du fichier : ");
+                Serial.print(F("Nouvelle taille maximale du fichier : "));
                 Serial.println(fileMaxSize);
             }
             // Commande TIMEOUT
             else if (input.startsWith("TIMEOUT=")) {
                 timeout = input.substring(input.indexOf('=') + 1).toInt();
-                Serial.print("Nouveau timeout pour les capteurs : ");
+                Serial.print(F("Nouveau timeout pour les capteurs : "));
                 Serial.println(timeout);
             }
             // Commande LUMIN
             else if (input.startsWith("LUMIN=")) {
                 lumin = input.substring(input.indexOf('=') + 1).toInt();
-                Serial.print("Activation du capteur de luminosité : ");
+                Serial.print(F("Activation du capteur de luminosité : "));
                 Serial.println(lumin);
             }
             // Commande LUMIN_LOW
             else if (input.startsWith("LUMIN_LOW=")) {
                 luminLow = input.substring(input.indexOf('=') + 1).toInt();
-                Serial.print("Nouveau seuil bas de luminosité : ");
+                Serial.print(F("Nouveau seuil bas de luminosité : "));
                 Serial.println(luminLow);
             }
             // Commande LUMIN_HIGH
             else if (input.startsWith("LUMIN_HIGH=")) {
                 luminHigh = input.substring(input.indexOf('=') + 1).toInt();
-                Serial.print("Nouveau seuil haut de luminosité : ");
+                Serial.print(F("Nouveau seuil haut de luminosité : "));
                 Serial.println(luminHigh);
             }
             // Commande RESET
@@ -109,7 +109,7 @@ void modeConfiguration() {
             }
             // Commande VERSION
             else if (input.equalsIgnoreCase("VERSION")) {
-                Serial.println("Version 1.0.0 - Lot #12345");
+                Serial.println(F("Version 1.0.0 - Lot #12345"));
             }
             // Commande CLOCK pour régler l'heure
             else if (input.startsWith("CLOCK=")) {
@@ -119,7 +119,7 @@ void modeConfiguration() {
                 int second = timeStr.substring(6, 8).toInt();
                 DateTime now = rtc.now();
                 rtc.adjust(DateTime(now.year(), now.month(), now.day(), hour, minute, second));
-                Serial.println("Heure réglée.");
+                Serial.println(F("Heure réglée."));
             }
             // Commande DATE pour régler la date
             else if (input.startsWith("DATE=")) {
@@ -133,7 +133,7 @@ void modeConfiguration() {
             }
             // Si la commande n'est pas reconnue
             else {
-                Serial.println("Commande non reconnue.");
+                Serial.println(F("Commande non reconnue."));
             }
 
             // Sauvegarder les nouveaux paramètres
@@ -143,7 +143,7 @@ void modeConfiguration() {
 
         // Vérifier si 30 minutes d'inactivité sont écoulées
         if (millis() - lastActivityTime >= 1800000) {  // 30 minutes = 1800000 ms
-            Serial.println("Inactivité détectée. Retour au mode standard.");
+            Serial.println(F("Inactivité détectée. Retour au mode standard."));
             //ledRVB.setColor(0, 255, 0);  // LED verte pour indiquer le mode standard    // Pas besoins
             break;  // Sortir du mode configuration
         }
