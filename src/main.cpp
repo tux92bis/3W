@@ -64,8 +64,8 @@ void setup() {
   	pinMode(LED_BLEU, OUTPUT);
 
     // Initialisation des interruptions
-    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, FALLING);
-    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, FALLING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, CHANGE);
 
     //initModules();  // Initialise tous les modules comme DHT, LCD, etc.
 
@@ -236,6 +236,7 @@ void loop() {
 
     if (modeActuel == ECONOMIQUE) {
         couleurLedEconomique();
+        affichageEconomique();
         modeStandard();
         delay(logInterval * 2);
         //modeEconomique();
@@ -251,6 +252,7 @@ void loop() {
 
     if (modeActuel == STANDARD) {
         couleurLedStandard();
+        affichageStandart();
         modeStandard();
         delay(logInterval);
 
