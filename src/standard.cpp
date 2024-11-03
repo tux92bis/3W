@@ -141,7 +141,7 @@ struct Donnee {
 */
 
 // Fonction pour enregistrer les données dans un fichier CSV
-void enregistrerDonnee() {
+void modeStandard() {
   File dataFile = SD.open("data.csv", FILE_WRITE);
   
   if (dataFile) {
@@ -170,6 +170,7 @@ void enregistrerDonnee() {
   } else {
     Serial.println(F("Erreur d'écriture dans le fichier data.csv"));
   }
+  
 }
 
 
