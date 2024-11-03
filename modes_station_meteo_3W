@@ -1,0 +1,24 @@
+// Modes de Fonctionnement de la Station Météo 3W
+digraph {
+	size="10,10"
+	Standard [label="Mode Standard
+Activation : Par défaut
+LED : Verte
+Fonction : Collecte des données"]
+	Configuration [label="Mode Configuration
+Activation : Bouton au démarrage
+LED : Jaune
+Fonction : Commandes de configuration"]
+	Economique [label="Mode Économique
+Activation : Appui 5 sec en mode Standard
+LED : Bleue
+Fonction : Réduit la fréquence de collecte"]
+	Maintenance [label="Mode Maintenance
+Activation : Appui 5 sec en mode Économique ou Standard
+LED : Orange
+Fonction : Affiche les données en direct"]
+	Standard -> Economique [label="Appuyer 5 sec"]
+	Economique -> Maintenance [label="Appuyer 5 sec"]
+	Standard -> Maintenance [label="Appuyer 5 sec"]
+	Configuration -> Standard [label="30 min inactif"]
+}
