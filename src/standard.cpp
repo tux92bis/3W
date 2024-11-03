@@ -164,12 +164,12 @@ void modeStandard() {
     dataFile.print(analogRead(A0));
 
     // Écrit les données du capteur DHT sous forme de CSV
-    dataFile.print(",");
+   dataFile.print(",");
     dataFile.print(dht.readHumidity());             // Humidité
     dataFile.print(",");
     dataFile.print(dht.readTemperature());         // Température en Celsius
     dataFile.print(",");
-    dataFile.close();                              // Ferme le fichier après écriture
+    dataFile.close();                            // Ferme le fichier après écriture
    
   } else {
     Serial.println(F("Erreur d'écriture dans le fichier data.csv"));
