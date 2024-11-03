@@ -1,6 +1,6 @@
  #include "3W.h" // Inclus notre fichier en-tête
 
-DHT dht(6, DHT22);
+DHT dht(6, DHT11);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 // In a source file (e.g., main.cpp)
  // Definition and initialization of the DHT object
