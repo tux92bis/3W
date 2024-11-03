@@ -8,7 +8,7 @@ int modePrecedent = STANDARD;   // Pour connaître le mode précedent (utile si 
 volatile bool boutonAppuyeVert = false;   // Pour connaître l'état du bouton vert
 volatile bool boutonAppuyeRouge = false;   // Pour connaître l'état du bouton rouge
 unsigned long dureeAppui = 0;   // Pour mesurer le temps d'appuie
-volatile unsigned long TempsInterruption = 50;   // Pour mesurer le temps d'interruption en milisecondes
+volatile unsigned long TempsInterruption = 0;   // Pour mesurer le temps d'interruption en milisecondes
 const unsigned long delaiRebond = 50; // Délai anti-rebond en millisecondes
 
 
@@ -44,7 +44,7 @@ void couleurLedEconomique() {
 void boutonRougePresser() {
   unsigned long tempsActuel = millis();
 
-  if (tempsActuel - TempsInterruption > delaiRebond) {
+  if ((tempsActuel - TempsInterruption > delaiRebond) && digitalRead(BOUTON_VERT) == LOW) {
       boutonAppuyeRouge = true;
       Serial.println(F("Interruption bouton rouge !"));
       TempsInterruption = tempsActuel; // Met à jour le dernier temps de l'interruption
@@ -60,7 +60,7 @@ void boutonRougePresser() {
 void boutonVertPresser() {
   unsigned long tempsActuel = millis();
 
-  if (tempsActuel - TempsInterruption > delaiRebond) {
+  if ((tempsActuel - TempsInterruption > delaiRebond) && digitalRead(BOUTON_VERT) == LOW) {
       boutonAppuyeVert = true;
       Serial.println(F("Interruption bouton vert !"));
       TempsInterruption = tempsActuel; // Met à jour le dernier temps de l'interruption
