@@ -144,9 +144,9 @@ struct Donnee {
 void modeStandard() {
   File dataFile = SD.open("data.csv", FILE_WRITE);
   lcd.clear();
-  lcd.SetCursor(0,0);
+  lcd.setCursor(0,0);
   lcd.print(dht.readHumidity());
-  lcd.SetCursor(0,1);
+  lcd.setCursor(0,1);
   lcd.print("dht.readTemperature()");
   
   if (dataFile) {
