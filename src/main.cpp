@@ -1,4 +1,4 @@
-#include "3W.h" // Inclus notre fichier en-tête
+ #include "3W.h" // Inclus notre fichier en-tête
 #include <SD.h>
 
 bool ecritureSD = true; // Contrôle l'écriture sur la carte SD
@@ -132,7 +132,7 @@ void loop() {
                 // Pour retourner en mode standard lorsque l'on quitte le mode maintenance qui à été acceder depuis le mode standard
                 modePrecedent = STANDARD;  
               
-              	Serial.println("Mode maintenance enclencher");
+              	Serial.println(f'Mode maintenance enclencher');
             }
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
@@ -151,7 +151,7 @@ void loop() {
             if (dureeAppui >= 1000) { 
                 modeActuel = ECONOMIQUE;   // Passage en mode economique
               
-              	Serial.println("Mode economique enclencher");
+              	Serial.println(f'Mode economique enclencher');
             }
             
             boutonAppuyeRouge = false; // Rénitialisation de l'état du bouton
