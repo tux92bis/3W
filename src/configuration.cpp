@@ -13,11 +13,11 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);  /* L'écran LCD */
 RTC_DS3231 rtc;     /* RTC pour gérer l'horloge */     
 
 // Variables des paramètres de configuration
-byte logInterval = 10;      // Intervalle de mesure (en minutes)
+int logInterval = 10;      // Intervalle de mesure (en minutes)
 int fileMaxSize = 4096;    // Taille maximale du fichier de log (en octets)
-byte timeout = 30;          // Timeout des capteurs (en secondes)
-byte lumin = 1;             // Activation du capteur de luminosité
-byte luminLow = 255;        // Seuil bas pour la luminosité
+int timeout = 30;          // Timeout des capteurs (en secondes)
+int lumin = 1;             // Activation du capteur de luminosité
+int luminLow = 255;        // Seuil bas pour la luminosité
 int luminHigh = 768;       // Seuil haut pour la luminosité
 unsigned long lastActivityTime = 0; // Pour surveiller l'inactivité
 
@@ -47,19 +47,19 @@ void resetToDefaults() {
 // Fonction de configuration
 void modeConfiguration() {
     lcd.clear();
-    lcd.print("Mode Config actif");
-    Serial.println("=== Mode Configuration ===");
-    Serial.println("Commandes disponibles : ");
-    Serial.println("LOG_INTERVAL=x (en minutes)");
-    Serial.println("FILE_MAX_SIZE=x (en octets)");
-    Serial.println("TIMEOUT=x  (en secondes)");
-    Serial.println("LUMIN=x  (activation 1/0)");
-    Serial.println("LUMIN_LOW=x (seuil bas de luminosité)");
-    Serial.println("LUMIN_HIGH=x (seuil haut de luminosité)");
-    Serial.println("RESET (réinitialise les valeurs par défaut)");
-    Serial.println("VERSION (affiche la version du programme)");
-    Serial.println("CLOCK (configurer l'heure)");
-    Serial.println("DATE (configurer la date)");
+    lcd.print(F("Mode Config actif"));
+    Serial.println(F("=== Mode Configuration ==="));
+    Serial.println(F("Commandes disponibles : "));
+    Serial.println(F("LOG_INTERVAL=x (en minutes)"));
+    Serial.println(F("FILE_MAX_SIZE=x (en octets)"));
+    Serial.println(F("TIMEOUT=x  (en secondes)"));
+    Serial.println(F("LUMIN=x  (activation 1/0)"));
+    Serial.println(F("LUMIN_LOW=x (seuil bas de luminosité)"));
+    Serial.println(F("LUMIN_HIGH=x (seuil haut de luminosité)"));
+    Serial.println(F("RESET (réinitialise les valeurs par défaut)"));
+    Serial.println(F("VERSION (affiche la version du programme)"));
+    Serial.println(F("CLOCK (configurer l'heure)"));
+    Serial.println(F("DATE (configurer la date)"));
     lastActivityTime = millis();  // Réinitialiser le compteur d'inactivité
 
     while (true) {
