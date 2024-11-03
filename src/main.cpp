@@ -1,6 +1,7 @@
  #include "3W.h" // Inclus notre fichier en-tête
 
-
+DHT dht(6, DHT22);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 // In a source file (e.g., main.cpp)
  // Definition and initialization of the DHT object
 /*-----structure des données pour le capteur-----*/
@@ -67,9 +68,12 @@ void setup() {
     attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, RISING);
 
     //initModules();  // Initialise tous les modules comme DHT, LCD, etc.
-    DHT dht(6, DHT22);
-    LiquidCrystal_I2C lcd(0x27, 16, 2);
-    RTC_DS3231 rtc;    
+
+    lcd.init();
+    lcd.backlight();
+    RTC_DS3231 rtc;
+    rtc.begin();
+    dht.begin();    
     couleurLedStandard(); // Démarre en mode standard
 
     /*-----Initialisation des capteurs et modules (DHT, Écran LCD, GPS, Horloge, LED RVB, SD card)-----*/
@@ -226,23 +230,29 @@ void loop() {
     // execution du mode actuel
     if (modeActuel == CONFIGURATION) {
         couleurLedConfiguration();
+        affichageConfiguration();
         modeConfiguration();
     }
 
     if (modeActuel == ECONOMIQUE) {
-        couleurLedEconomie();
+        couleurLedEconomique();
+        affichageEconomique();
         modeStandard();
-        delay(logInterval);
+        delay(logInterval * 2);
         //modeEconomique();
     }
 
     if (modeActuel == MAINTENANCE) {
+        affichageMaintenance();
         couleurLedMaintenance();
+        modeMaintenance();
+
         //modeMaintenance();
     }
 
     if (modeActuel == STANDARD) {
         couleurLedStandard();
+        affichageStandart();
         modeStandard();
         delay(logInterval);
 

@@ -1,6 +1,7 @@
 /*-----Fichier Header-----*/
 
 #pragma once // Pour éviter d'appeler plusieurs fichier en-tête identique
+
 #include <EEPROM.h>
 #include <Arduino.h>
 #include <RTClib.h> /* Pour la bibliothèque RTC */
@@ -93,7 +94,7 @@ void boutonVertPresser();
 void couleurLedMaintenance();
 void couleurLedStandard();
 void couleurLedConfiguration();
-void couleurLedEconomie();
+void couleurLedEconomique();
 
 // affichage LCD
 
@@ -103,7 +104,7 @@ void affichageEconomique();
 void affichageMaintenance();
 // Déclaration des fonctions du fichier "standart.cpp"
 void modeStandard();
-
+void modeConfiguration();
 /*
 //DonneesCapteur obtenir_donnees();
 String obtenir_temps();

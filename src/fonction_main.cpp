@@ -42,15 +42,47 @@ void couleurLedEconomique() {
 void boutonRougePresser() {
     // Lorsque bouton rouge presser
     boutonAppuyeRouge = true;
-  	Serial.println("Interruption bouton rouge !");
+  	Serial.println(F("Interruption bouton rouge !"));
 }
 
 void boutonVertPresser() {
     // Lorsque bouton vert presser
     boutonAppuyeVert = true;
-  	Serial.println("Interruption bouton vert !");
+  	Serial.println(F("Interruption bouton vert !"));
 }
 
 void affichageStandart(){
+  lcd.setCursor(0, 0);
+  lcd.print(F("Mode"));
+  lcd.setCursor(0, 1);
+  lcd.print(F("standart"));
+
+
+}
+
+void affichageEconomique(){
+  lcd.setCursor(0, 0);
+  lcd.print(F("Mode"));
+  lcd.setCursor(0, 1);
+  lcd.print(F("economie"));
+
+
+}
+
+void affichageConfiguration(){
+  lcd.setCursor(0, 0);
+  lcd.print(F("Mode"));
+  lcd.setCursor(0, 1);
+  lcd.print(F("configuration"));
+
+
+}
+
+void affichageMaintenance(){
+  lcd.setCursor(0, 0);
+  lcd.print(F("Mode"));
+  lcd.setCursor(0, 1);
+  lcd.print(F("maintenance"));
+
 
 }

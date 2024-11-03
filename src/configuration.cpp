@@ -5,7 +5,6 @@
 
 
 #include "3W.h"
-#include <EEPROM.h>
 
 RTC_DS3231 rtc;         
 
