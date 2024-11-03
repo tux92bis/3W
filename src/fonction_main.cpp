@@ -8,6 +8,8 @@ int modePrecedent = STANDARD;   // Pour connaître le mode précedent (utile si 
 volatile bool boutonAppuyeVert = false;   // Pour connaître l'état du bouton vert
 volatile bool boutonAppuyeRouge = false;   // Pour connaître l'état du bouton rouge
 unsigned long dureeAppui = 0;   // Pour mesurer le temps d'appuie
+volatile unsigned long TempsInterruption = 50;   // Pour mesurer le temps d'interruption en milisecondes
+const unsigned long delaiRebond = 50; // Délai anti-rebond en millisecondes
 
 
 //Définition des fonctions
@@ -40,15 +42,35 @@ void couleurLedEconomique() {
 }
 
 void boutonRougePresser() {
-    // Lorsque bouton rouge presser
-    boutonAppuyeRouge = true;
-  	Serial.println(F("Interruption bouton rouge !"));
+  unsigned long tempsActuel = millis();
+
+  if (tempsActuel - TempsInterruption > delaiRebond) {
+      boutonAppuyeRouge = true;
+      Serial.println(F("Interruption bouton rouge !"));
+      TempsInterruption = tempsActuel; // Met à jour le dernier temps de l'interruption
+  }
+
+/*
+  // Lorsque bouton rouge presser
+  boutonAppuyeRouge = true;
+  Serial.println(F("Interruption bouton rouge !"));
+*/
 }
 
 void boutonVertPresser() {
+  unsigned long tempsActuel = millis();
+
+  if (tempsActuel - TempsInterruption > delaiRebond) {
+      boutonAppuyeVert = true;
+      Serial.println(F("Interruption bouton vert !"));
+      TempsInterruption = tempsActuel; // Met à jour le dernier temps de l'interruption
+  }
+
+/*
     // Lorsque bouton vert presser
     boutonAppuyeVert = true;
   	Serial.println(F("Interruption bouton vert !"));
+    */
 }
 
 void affichageStandart(){
@@ -83,6 +105,4 @@ void affichageMaintenance(){
   lcd.print(F("Mode"));
   lcd.setCursor(0, 1);
   lcd.print(F("maintenance"));
-
-
 }
