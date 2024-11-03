@@ -143,6 +143,11 @@ struct Donnee {
 // Fonction pour enregistrer les données dans un fichier CSV
 void modeStandard() {
   File dataFile = SD.open("data.csv", FILE_WRITE);
+  lcd.clear();
+  lcd.SetCursor(0,0);
+  lcd.print(dht.readHumidity());
+  lcd.SetCursor(0,1);
+  lcd.print("dht.readTemperature()");
   
   if (dataFile) {
     // Écrit les données GPS sous forme de CSV
