@@ -137,7 +137,6 @@ void modeConfiguration() {
         // Vérifier si 30 minutes d'inactivité sont écoulées
         if (millis() - lastActivityTime >= 1800000) {  // 30 minutes = 1800000 ms
             Serial.println(F("Inactivité détectée. Retour au mode standard."));
-            //ledRVB.setColor(0, 255, 0);  // LED verte pour indiquer le mode standard    // Pas besoins
             break;  // Sortir du mode configuration
         }
     }
