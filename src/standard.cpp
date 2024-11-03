@@ -108,7 +108,7 @@ void sauvegarder_donnees_csv(float temperature, float humidite, int luminosite, 
 #include <SD.h>
 #include <SPI.h>
 #include <RTClib.h>
-#include <TinyGPSPlus.h>
+
 
 int intervalNormal = 1000;
 int intervalEco = 2000;   //en ms
@@ -146,9 +146,9 @@ void enregistrerDonnee() {
   
   if (dataFile) {
     // Écrit les données GPS sous forme de CSV
-    dataFile.print(gps.location.lat(), 6);    // Latitude avec 6 décimales
+    dataFile.print(48.900047);    // Latitude avec 6 décimales
     dataFile.print(",");
-    dataFile.print(gps.location.lng(), 6);   // Longitude avec 6 décimales
+    dataFile.print(2.194916);   // Longitude avec 6 décimales
     dataFile.print(",");
     // Convert DateTime to string
     DateTime now = rtc.now();
