@@ -1,4 +1,4 @@
- #include "3W.h" // Inclus notre fichier en-tête
+#include "3W.h" // Inclus notre fichier en-tête
 
 DHT dht(6, DHT11);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -55,7 +55,7 @@ void setup() {
     
     // Initialisation du port des boutons pour capter des entrées
     pinMode(BOUTON_ROUGE, INPUT_PULLUP);
-    pinMode(BOUTON_VERT, INPUT);
+    pinMode(BOUTON_VERT, INPUT_PULLUP);
 
     // Initialisation de la led
     //pinMode(LED_PIN, OUTPUT);
@@ -64,8 +64,8 @@ void setup() {
   	pinMode(LED_BLEU, OUTPUT);
 
     // Initialisation des interruptions
-    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, RISING);
-    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, RISING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, FALLING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, FALLING);
 
     //initModules();  // Initialise tous les modules comme DHT, LCD, etc.
 
@@ -108,7 +108,7 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == HIGH) {
+            while (digitalRead(BOUTON_ROUGE) == LOW) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -130,7 +130,7 @@ void loop() {
         if (boutonAppuyeVert) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_VERT) == HIGH) {
+            while (digitalRead(BOUTON_VERT) == LOW) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -154,7 +154,7 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == HIGH) {
+            while (digitalRead(BOUTON_ROUGE) == LOW) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -175,7 +175,7 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == HIGH) {
+            while (digitalRead(BOUTON_ROUGE) == LOW) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -196,7 +196,7 @@ void loop() {
         if (boutonAppuyeVert) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_VERT) == HIGH) {
+            while (digitalRead(BOUTON_VERT) == LOW) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -252,6 +252,7 @@ void loop() {
 
     if (modeActuel == STANDARD) {
         couleurLedStandard();
+        affichageStandart();
         modeStandard();
         delay(logInterval);
 
