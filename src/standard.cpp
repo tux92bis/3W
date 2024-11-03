@@ -144,10 +144,9 @@ struct Donnee {
 void modeStandard() {
   File dataFile = SD.open("data.csv", FILE_WRITE);
   lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print(dht.readHumidity());
-  lcd.setCursor(0,1);
-  lcd.print("dht.readTemperature()");
+  lcd.setCursor(5,0);
+  int luminosite = analogRead(A0);
+  lcd.print(luminosite);
   
   if (dataFile) {
     // Écrit les données GPS sous forme de CSV

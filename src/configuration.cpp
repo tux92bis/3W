@@ -9,7 +9,7 @@
 RTC_DS3231 rtc;         
 
 // Variables des paramètres de configuration
-int logInterval = 10;      // Intervalle de mesure (en minutes)
+int logInterval = 1000;      // Intervalle de mesure (en minutes)
 int fileMaxSize = 4096;    // Taille maximale du fichier de log (en octets)
 int timeout = 30;          // Timeout des capteurs (en secondes)
 int lumin = 1;             // Activation du capteur de luminosité

@@ -252,7 +252,6 @@ void loop() {
 
     if (modeActuel == STANDARD) {
         couleurLedStandard();
-        affichageStandart();
         modeStandard();
         delay(logInterval);
 
