@@ -143,6 +143,7 @@ struct Donnee {
 // Fonction pour enregistrer les données dans un fichier CSV
 void modeStandard() {
   File dataFile = SD.open("data.csv", FILE_WRITE);
+  lcd.clear();
   lcd.setCursor(10,1);
   lcd.print("L: ");
   lcd.print(analogRead(A0));
