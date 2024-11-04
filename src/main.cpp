@@ -236,7 +236,6 @@ void loop() {
 
     if (modeActuel == ECONOMIQUE) {
         couleurLedEconomique();
-        affichageEconomique();
         modeStandard();
         delay(logInterval * 2);
         //modeEconomique();
@@ -252,7 +251,6 @@ void loop() {
 
     if (modeActuel == STANDARD) {
         couleurLedStandard();
-        affichageStandart();
         modeStandard();
         delay(logInterval);
 
