@@ -156,8 +156,6 @@ void modeStandard() {
   Serial.println(dht.readHumidity());
 
   
-  
-  if (dataFile) {
     // Écrit les données GPS sous forme de CSV
     dataFile.print(48.900047);    // Latitude avec 6 décimales
     dataFile.print(",");
@@ -180,10 +178,6 @@ void modeStandard() {
     dataFile.print(",");
     dataFile.close();                            // Ferme le fichier après écriture
    
-  } else {
-    Serial.println(F("Erreur d'écriture dans le fichier data.csv"));
-  }
-  
 }
 
 
