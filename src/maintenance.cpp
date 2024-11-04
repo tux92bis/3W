@@ -8,6 +8,7 @@ void modeMaintenance() {
     lcd.setCursor(0, 0);
     lcd.print(F("Ecriture"));
     lcd.setCursor(0, 1);
+    lcd.print("desactive");
 
     // Lire les données du fichier `data.csv` sur la carte SD et les envoyer via le port série
     File dataFile = SD.open("data.csv");
