@@ -142,7 +142,6 @@ struct Donnee {
 
 // Fonction pour enregistrer les données dans un fichier CSV
 void modeStandard() {
-  File dataFile = SD.open("data.csv", FILE_WRITE);
   lcd.clear();
   lcd.setCursor(10,1);
   lcd.print("L: ");
@@ -158,6 +157,7 @@ void modeStandard() {
 
   
     // Écrit les données GPS sous forme de CSV
+    File dataFile = SD.open("data.csv", FILE_WRITE);
     dataFile.print(48.900047);    // Latitude avec 6 décimales
     dataFile.print(",");
     dataFile.print(2.194916);   // Longitude avec 6 décimales
