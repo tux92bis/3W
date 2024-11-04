@@ -68,7 +68,7 @@ void boutonVertPresser() {
   
   if ((tempsActuel - tempsInterruption > delaiRebond) && digitalRead(BOUTON_VERT) == LOW) {
     boutonAppuyeRouge = true;
-    Serial.println(F("Interruption bouton rouge !"));
+    Serial.println(F("Interruption bouton vert !"));
     tempsInterruption = tempsActuel;
   }
 /*  

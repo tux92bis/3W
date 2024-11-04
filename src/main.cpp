@@ -54,8 +54,8 @@ void setup() {
     Serial.begin(9600);
     
     // Initialisation du port des boutons pour capter des entrées
-    pinMode(BOUTON_ROUGE, INPUT_PULLUP);
-    pinMode(BOUTON_VERT, INPUT_PULLUP);
+    pinMode(BOUTON_ROUGE, INPUT);
+    pinMode(BOUTON_VERT, INPUT);
 
     // Initialisation de la led
     //pinMode(LED_PIN, OUTPUT);
