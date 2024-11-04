@@ -19,7 +19,7 @@ typedef struct {
 /*
 void clignoterLED() {
     static unsigned long dernierTemps = 0;
-    static bool etatLED = LOW;
+    static bool etatLED = HIGH;
     unsigned long intervalle = 0;
 
     switch (modeActuel) {
@@ -64,8 +64,8 @@ void setup() {
   	pinMode(LED_BLEU, OUTPUT);
 
     // Initialisation des interruptions
-    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, FALLING);
-    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, FALLING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_ROUGE), boutonRougePresser, RISING);
+    attachInterrupt(digitalPinToInterrupt(BOUTON_VERT), boutonVertPresser, RISING);
 
     //initModules();  // Initialise tous les modules comme DHT, LCD, etc.
 
@@ -108,7 +108,7 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == LOW) {
+            while (digitalRead(BOUTON_ROUGE) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -130,7 +130,7 @@ void loop() {
         if (boutonAppuyeVert) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_VERT) == LOW) {
+            while (digitalRead(BOUTON_VERT) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -154,7 +154,7 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == LOW) {
+            while (digitalRead(BOUTON_ROUGE) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -175,7 +175,7 @@ void loop() {
         if (boutonAppuyeRouge) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_ROUGE) == LOW) {
+            while (digitalRead(BOUTON_ROUGE) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
@@ -196,7 +196,7 @@ void loop() {
         if (boutonAppuyeVert) {
             dureeAppui = millis();
 
-            while (digitalRead(BOUTON_VERT) == LOW) {
+            while (digitalRead(BOUTON_VERT) == HIGH) {
                 // Rien ne se passe tant que le bouton est presser
             }
 
