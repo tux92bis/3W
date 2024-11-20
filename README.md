@@ -1,0 +1,1 @@
+Le 3W pour World Weather Watcher est un projet d'étude effectuer dans le cadre du bloc système embarqué de la CPIA2-INFO au CESI. Elle prend comme micro controlleur Arduino Uno ainsi qu'une miriade de capteur détaillé dans le code du programme. 
